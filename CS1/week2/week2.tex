@@ -1,0 +1,141 @@
+\documentclass[dvipdfmx,a4paper,11pt]{jsarticle}
+\usepackage{amsmath,amssymb,amsfonts,amsthm}
+\usepackage[dvipdfmx]{graphicx}
+\usepackage{tikz}
+\usetikzlibrary{positioning, intersections, calc, arrows.meta, math, through, shadows}
+\usepackage{tcolorbox}
+\tcbuselibrary{theorems,breakable}
+\usepackage{enumerate}
+\usepackage{mathtools}
+\usepackage{otf}
+\usepackage{xspace}
+\usepackage{newpxtext}
+\usepackage[utf8]{inputenc} %中国語コンパイル環境-cjkホットショット
+\usepackage{CJKutf8,CJKspace,CJKpunct} %中国語コンパイル環境
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepackage{okumacro} %漢字ruby
+\renewcommand{\abstractname}{注意事項}
+\newtagform{textbf}[	extbf]{[}{]}
+\usetagform{textbf}
+\newcommand*{\ie}{\textbf{\textit{i.e.}}\@\xspace}
+\renewcommand{\qedsymbol}{$\blacksquare$}
+\newtcbtheorem[]{reidai}{例題}
+{fonttitle=\gtfamily\sffamily\bfseries\upshape\large,
+colframe=black,colback=black!15!white,
+rightrule=1pt,leftrule=1pt,bottomrule=2pt,
+colbacktitle=black,theorem style=standard,breakable,arc=10pt}
+{tha}
+\renewcommand{\thefootnote}{\arabic{footnote}}
+\newtheoremstyle{mystyle}%
+  {}%                      % 上部スペース
+  {}%                      % 下部スペース
+  {}%                      % 本文フォント
+  {}%                      % 1行目のインデント量
+  {\bfseries}%             % 見出しフォント
+  :%                       % 見出し後の句読点
+  { }%                     % 見出し後のスペース
+  {\thmname{#1}\thmnumber{ #2}\thmnote{ (#3)}}
+\theoremstyle{mystyle}
+% \setcounter{section}{0}
+% \stepcounter{section}
+% セクションカウンターを使用するが、表示はしない新しいセクションコマンドを作成
+\newtheorem{dfn}{\texttt{Def.}}[section]
+\newtheorem{exm}[dfn]{\texttt{Ex.}}
+\newtheorem{prop}[dfn]{\texttt{Prop.}}
+\newtheorem{lem}[dfn]{\texttt{Lem.}}
+\newtheorem{thm}[dfn]{\texttt{Thm.}}
+\newtheorem{cor}[dfn]{\texttt{Cor.}}
+\newtheorem{rem}[dfn]{\texttt{Rem.}}
+\newtheorem{fact}[dfn]{\texttt{Fact}}
+\renewcommand{\qedsymbol}{$\blacksquare$}
+\usepackage{lipsum} % 用于生成示例文本
+\usepackage{float} % 强制浮动
+\usepackage{tikz} % 用于定位
+%排版
+\newcommand{\kai}%解答
+{\noindent
+\begin{tikzpicture}[scale=0.2, baseline=2.8pt]
+\draw (3.3,1.2) node{\large\textgt{解 答}};
+\draw[thick, rounded corners=3pt,] (0,0)--(6.5,0)--(6.5,2.4)--(0,2.4)--cycle;
+\end{tikzpicture}}
+\newcommand{\shomei}%証明
+{\noindent
+\begin{tikzpicture}[scale=0.2, baseline=2.8pt]
+\draw (3.3,1.2) node{\textgt{証 明}};
+\draw[double,thick,rounded corners=3pt,] (0,0)--(6.5,0)--(6.5,2.4)--(0,2.4)--cycle;
+\end{tikzpicture};}
+%補足
+\newcommand{\hosoku}{\noindent
+\begin{tikzpicture}[scale=0.2, baseline=2.8pt]
+\draw (6,1) node{\large\textgt{補足}};
+\fill (0,1)--(1,0)--(2,1)--(1,2)--cycle;
+\fill[gray] (1,1)--(2,0)--(3,1)--(2,2)--cycle;
+\fill (2,1)--(3,0)--(4,1)--(3,2)--cycle;
+\fill (10,1)--(11,0)--(12,1)--(11,2)--cycle;
+\fill[gray] (9,1)--(10,0)--(11,1)--(10,2)--cycle;
+\fill (8,1)--(9,0)--(10,1)--(9,2)--cycle;
+\end{tikzpicture};}
+%注意
+\newcommand{\chui}{\noindent
+\begin{tikzpicture}[scale=0.2, baseline=2.8pt]
+\fill (0,0)--(6.5,0)--(6.5,2.2)--(0,2.2);
+\draw (3.3,1) node[white]{\large\textgt{注意！}};
+\draw[thick] (0,0)--(6.5,0)--(6.5,2.2)--(0,2.2)--cycle;
+\end{tikzpicture};}
+\title{\vspace{-3cm}}  %タイトル
+\author{\texttt{YI Ran} - $\mathnormal{21122200512}$\\ \texttt{ra0137xf@ed.ritsumei.ac.jp}}  %著者名
+\date{}  %日付
+\begin{document}
+\maketitle
+%\vspace{-0.4cm}
+%\begin{figure}[H]
+%\centering
+%\begin{tikzpicture}[remember picture, overlay]
+%   \node[anchor=north east] at (current page.north east) {%
+%        \includegraphics[width=2cm]{pics/qr.png} % 修正图片地址
+%    };
+%    \node[anchor=north east, yshift=-2cm] at (current page.north east) {デジタル版はここ};
+%\end{tikzpicture}
+%\label{fig:my_label}
+%\end{figure}
+%\begin{abstract} %概要
+  %注意事項
+%\end{abstract}
+%\begin{reidai}{2次方程式}{解答}
+%\end{reidai}
+%\begin{proof}
+%\end{proof}
+\section*{\textbf{問1}}
+
+\begin{itemize}
+  \item チューリングが関わったエニグマ暗号の解読プロジェクト:\\
+  アラン・チューリングは1939年に$GC\&CS$に参加し、ブレッチリー・パークのハット8を率いて、ゴードン・ウェルチマンやジョーン・クラークらとともにドイツ海軍エニグマの解読に取り組んだ。
+  1940年にポーランドの暗号研究者から得た知見を基に、彼は英初の専用暗号解析機「ボンベ」を設計し、エニグマ活用の突破口となった。\\
+  $\left(\texttt{参考ウェブサイト:\ https://www.gchq.gov.uk/information/alan-turing }\right)$\\
+
+  \item ARPANET:\\
+  ARPANET（アーパネット、Advanced Research Projects Agency NETwork、高等研究計画局ネットワーク）は、世界で初めて運用されたパケット通信コンピュータネットワークであり、インターネットの起源でもある。アメリカ国防総省の高等研究計画局（略称ARPA、後にDARPA）が資金を提供し、いくつかの大学と研究機関でプロジェクトが行われた。
+  ARPANETのパケット交換はイギリスの科学者ドナルド・デービスとリンカーン研究所のローレンス・ロバーツの設計に基づいていた。\\
+  $\left(\texttt{参考ウェブサイト:\ https://ja.wikipedia.org/wiki/ARPANET }\right)$\\
+
+  \item ディープラーニング:\\
+  ディープラーニング（deep learning）または深層学習とは、対象の全体像から細部までの各々の粒度の概念を階層構造として関連させて学習する手法のことである。
+  深層学習は複数の独立した機械学習手法の総称であり、2006年以降に急速に進歩した。その中でも最も普及した手法は、（狭義には4層以上の）多層の人工ニューラルネットワーク（ディープニューラルネットワーク、英: deep neural network; DNN）による機械学習手法である。\\
+  $\left(\texttt{参考ウェブサイト:\ https://ja.wikipedia.org/wiki/ディープラーニング }\right)$\\
+
+  \item GPGPU:\\
+  GPGP\ （General-purpose computing on graphics processing units; GPUによる汎用計算）はGPUの演算資源を画像処理以外に応用する技術で、科学技術計算やスーパーコンピュータへの応用が進んでいる。GPU特有の制約は改善されつつあり、プログラマビリティの向上やOpenCLによる互換性向上により、HPC分野での導入が加速している。
+  $\left(\texttt{参考ウェブサイト:\ https://ja.wikipedia.org/wiki/GPGPU }\right)$
+\end{itemize}
+\newpage
+\section*{\textbf{問2}}
+%\includegraphics[width=0.7\textwidth]{pics/week2_png.jpg}
+Promptは図の下にあります。
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.8\linewidth]{pics/week2_png.jpg}
+\caption{ \textbf{Prompt:\ }\ \texttt{A man crying in front of a super computer}}
+\label{fig:example}
+\end{figure}
+\end{document}

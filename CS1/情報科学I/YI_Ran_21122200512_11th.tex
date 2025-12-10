@@ -1,0 +1,308 @@
+\documentclass[dvipdfmx,a4paper]{jsarticle}
+\usepackage{amsmath,amssymb,amsfonts,amsthm}
+\usepackage[dvipdfmx]{graphicx}
+\usepackage{tikz}
+\usetikzlibrary{positioning, intersections, calc, arrows.meta, math, through, shadows}
+\usepackage{tcolorbox}
+\tcbuselibrary{theorems,breakable}
+\usepackage{enumerate}
+\usepackage{mathtools}
+\usepackage{otf}
+\usepackage{xspace}
+\usepackage{newpxtext}
+\usepackage[utf8]{inputenc} %中国語コンパイル環境-cjkホットショット
+\usepackage{CJKutf8,CJKspace,CJKpunct} %中国語コンパイル環境
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepackage{okumacro} %漢字ruby
+\renewcommand{\abstractname}{注意事項}
+\newtagform{textbf}[	extbf]{[}{]}
+\usetagform{textbf}
+\newcommand*{\ie}{\textbf{\textit{i.e.}}\@\xspace}
+\renewcommand{\qedsymbol}{$\blacksquare$}
+\newtcbtheorem[]{reidai}{例題}
+{fonttitle=\gtfamily\sffamily\bfseries\upshape\large,
+colframe=black,colback=black!15!white,
+rightrule=1pt,leftrule=1pt,bottomrule=2pt,
+colbacktitle=black,theorem style=standard,breakable,arc=10pt}
+{tha}
+\renewcommand{\thefootnote}{\arabic{footnote}}
+\newtheoremstyle{mystyle}%
+  {}%                      % 上部スペース
+  {}%                      % 下部スペース
+  {}%                      % 本文フォント
+  {}%                      % 1行目のインデント量
+  {\bfseries}%             % 見出しフォント
+  :%                       % 見出し後の句読点
+  { }%                     % 見出し後のスペース
+  {\thmname{#1}\thmnumber{ #2}\thmnote{ (#3)}}
+\theoremstyle{mystyle}
+% \setcounter{section}{0}
+% \stepcounter{section}
+% セクションカウンターを使用するが、表示はしない新しいセクションコマンドを作成
+\newtheorem{dfn}{\texttt{Def.}}[section]
+\newtheorem{exm}[dfn]{\texttt{Ex.}}
+\newtheorem{prop}[dfn]{\texttt{Prop.}}
+\newtheorem{lem}[dfn]{\texttt{Lem.}}
+\newtheorem{thm}[dfn]{\texttt{Thm.}}
+\newtheorem{cor}[dfn]{\texttt{Cor.}}
+\newtheorem{rem}[dfn]{\texttt{Rem.}}
+\newtheorem{fact}[dfn]{\texttt{Fact}}
+\theoremstyle{definition}
+\newtheorem{problem}{問題}
+\newtheorem*{solution}{解答}
+\renewcommand{\qedsymbol}{$\blacksquare$}
+\usepackage{lipsum} % 用于生成示例文本
+\usepackage{float} % 强制浮动
+\usepackage{tikz} % 用于定位
+\usepackage{lastpage}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{} 
+\fancyhead[L]{\textsc{情報科学Iの第十回講義課題}}
+\fancyhead[R]{\textit{www.andreyis.com}}
+\fancyfoot[C]{\thepage\quad \textit{of}\quad\pageref*{LastPage}}
+\fancypagestyle{plain}{
+  \fancyhf{}
+  \renewcommand{\headrulewidth}{0pt}
+  \fancyfoot[C]{\thepage\quad \textit{of}\quad\pageref*{LastPage}}
+
+}
+%排版
+\newcommand{\kai}%解答
+{\noindent
+\begin{tikzpicture}[scale=0.2, baseline=2.8pt]
+\draw (3.3,1.2) node{\large\textgt{解 答}};
+\draw[thick, rounded corners=3pt,] (0,0)--(6.5,0)--(6.5,2.4)--(0,2.4)--cycle;
+\end{tikzpicture}}
+\newcommand{\shomei}%証明
+{\noindent
+\begin{tikzpicture}[scale=0.2, baseline=2.8pt]
+\draw (3.3,1.2) node{\textgt{証 明}};
+\draw[double,thick,rounded corners=3pt,] (0,0)--(6.5,0)--(6.5,2.4)--(0,2.4)--cycle;
+\end{tikzpicture};}
+%補足
+\newcommand{\hosoku}{\noindent
+\begin{tikzpicture}[scale=0.2, baseline=2.8pt]
+\draw (6,1) node{\large\textgt{補足}};
+\fill (0,1)--(1,0)--(2,1)--(1,2)--cycle;
+\fill[gray] (1,1)--(2,0)--(3,1)--(2,2)--cycle;
+\fill (2,1)--(3,0)--(4,1)--(3,2)--cycle;
+\fill (10,1)--(11,0)--(12,1)--(11,2)--cycle;
+\fill[gray] (9,1)--(10,0)--(11,1)--(10,2)--cycle;
+\fill (8,1)--(9,0)--(10,1)--(9,2)--cycle;
+\end{tikzpicture};}
+%注意
+\newcommand{\chui}{\noindent
+\begin{tikzpicture}[scale=0.2, baseline=2.8pt]
+\fill (0,0)--(6.5,0)--(6.5,2.2)--(0,2.2);
+\draw (3.3,1) node[white]{\large\textgt{注意！}};
+\draw[thick] (0,0)--(6.5,0)--(6.5,2.2)--(0,2.2)--cycle;
+\end{tikzpicture};}
+\title{\vspace{-3cm} 情報科学Iの第11回講義課題}  %タイトル
+\author{\texttt{YI Ran} - $\mathnormal{21122200512}$\\ \texttt{andreyi@outlook.jp}}  %著者名
+\date{\today}  %日付
+\begin{document}
+\maketitle
+\thispagestyle{plain}
+%\vspace{-0.4cm}
+%\begin{figure}[H]
+%\centering
+%\begin{tikzpicture}[remember picture, overlay]
+%   \node[anchor=north east] at (current page.north east) {%
+%        \includegraphics[width=2cm]{pics/qr.png} % 修正图片地址
+%    };
+%    \node[anchor=north east, yshift=-2cm] at (current page.north east) {デジタル版はここ};
+%\end{tikzpicture}
+%\label{fig:my_label}
+%\end{figure}
+%\begin{abstract} %概要
+  %注意事項
+%\end{abstract}
+%\begin{reidai}{2次方程式}{解答}
+%\end{reidai}
+%\begin{proof}
+%\end{proof}
+\section*{問1. 以下の命題論理の真偽判定}
+
+\subsection*{問題設定}
+自然数を定義域とする述語$\mathrm{even}(x)$と$\mathrm{odd}(x)$について、
+\begin{itemize}
+    \item $\mathrm{even}(x)$: $x$は偶数である
+    \item $\mathrm{odd}(x)$: $x$は奇数である
+\end{itemize}
+とする。次の命題の真偽を判定せよ。
+
+\subsection*{(1) $\neg\mathrm{even}(3)$}
+
+\kai
+\begin{align*}
+    \mathrm{even}(3)\text{は「3は偶数である」}&\implies 3\text{は奇数なので、}\mathrm{even}(3)\text{は偽}\\
+                                      &\implies \neg\mathrm{even}(3)\text{はその否定なので真}
+\end{align*}
+\noindent
+したがって、$\neg\mathrm{even}(3)$は\textbf{真}である。
+
+
+\subsection*{(2) $\mathrm{even}(24) \land \neg\mathrm{odd}(26)$}
+\kai
+\vspace{5pt}
+\noindent
+\begin{align*}
+    \mathrm{even}(24)\text{は「24は偶数である」}&\implies \textbf{真}\\
+    \mathrm{odd}(26)\text{は「26は奇数である」}&\implies \textbf{偽}\\
+    &\implies \neg\mathrm{odd}(26)\textbf{は真}\\
+    &\implies \text{真} \land \text{真} = \textbf{真}
+\end{align*}
+したがって、$\mathrm{even}(24) \land \neg\mathrm{odd}(26)$は\textbf{真}である。
+
+
+\subsection*{(3) $\neg(\mathrm{even}(24) \land \mathrm{odd}(26))$}
+\kai
+\vspace{5pt}
+\noindent
+\begin{align*}
+    \mathrm{even}(24)\text{は「24は偶数である」}&\implies \textbf{真}\\
+    \mathrm{odd}(26)\text{は「26は奇数である」}&\implies \textbf{偽}\\
+    &\implies \mathrm{even}(24) \land \mathrm{odd}(26): \text{真} \land \text{偽} = \textbf{偽}\\
+    &\implies \neg(\mathrm{even}(24) \land \mathrm{odd}(26)) = \textbf{真}
+\end{align*}
+したがって、$\neg(\mathrm{even}(24) \land \mathrm{odd}(26))$は\textbf{真}である。
+\section*{問2. 次の命題または術語をgreaterを含む論理式で表せ}
+
+\subsection*{問題設定}
+自然数$x, y$について、述語$\mathrm{greater}(x,y)$について、
+\begin{itemize}
+    \item $\mathrm{greater}(x,y)$: $x$は$y$より大きい
+\end{itemize}
+とする。次の命題または述語を$\mathrm{greater}$を含む論理式で表せ。
+
+\subsection*{(1) 3は2よりも大きい}
+\kai
+$$\mathrm{greater}(3, 2)$$
+
+\subsection*{(2) $x$が3よりも大きいならば、$x$は2よりも大きい}
+
+\kai
+$$\forall x\, (\mathrm{greater}(x, 3) \rightarrow \mathrm{greater}(x, 2))$$
+
+\subsection*{(3) $x$が$y$よりも大きく、かつ$y$が$z$よりも大きいならば、$x$は$z$よりも大きい}
+
+\kai
+$$\forall x\, \forall y\, \forall z\, ((\mathrm{greater}(x, y) \land \mathrm{greater}(y, z)) \rightarrow \mathrm{greater}(x, z))$$
+
+
+\subsection*{(4) ある$x$が存在して、$x$は100よりも大きい}
+\kai
+$$\exists x\, \mathrm{greater}(x, 100)$$
+
+\subsection*{(5) すべての$x$について、$x$は100よりも大きいかまたは100よりも大きくない}
+\kai
+$$\forall x\, (\mathrm{greater}(x, 100) \lor \neg\mathrm{greater}(x, 100))$$
+
+
+\newpage
+
+\section*{問3. 等式の証明}
+
+\subsection*{問題}
+自然数$n$について、次の等式を示せ。
+$$1 \cdot 2 + 2 \cdot 3 + \cdots + n \cdot (n+1) = \frac{1}{3}n(n+1)(n+2)$$
+
+\kai
+\begin{proof}
+数学的帰納法により証明する。
+
+\vspace{10pt}
+\noindent
+$n = 1$のとき
+
+左辺:
+$$1 \cdot 2 = 2$$
+
+右辺:
+$$\frac{1}{3} \cdot 1 \cdot 2 \cdot 3 = \frac{6}{3} = 2$$
+\noindent
+左辺 = 右辺より、$n = 1$のとき成立。
+
+\vspace{10pt}
+\noindent
+$n = k$のとき成立すると仮定
+\noindent
+すなわち、
+$$1 \cdot 2 + 2 \cdot 3 + \cdots + k(k+1) = \frac{1}{3}k(k+1)(k+2)$$
+が成り立つと仮定する。
+
+\vspace{10pt}
+\noindent
+\textbf{$n = k+1$のとき}
+\noindent
+左辺を計算する:
+\begin{align*}
+&1 \cdot 2 + 2 \cdot 3 + \cdots + k(k+1) + (k+1)(k+2)\\
+&= \frac{1}{3}k(k+1)(k+2) + (k+1)(k+2) \quad \text{(帰納法の仮定を使用)}\\
+&= (k+1)(k+2)\left(\frac{k}{3} + 1\right)\\
+&= (k+1)(k+2) \cdot \frac{k+3}{3}\\
+&= \frac{1}{3}(k+1)(k+2)(k+3)
+\end{align*}
+
+これは$n = k+1$のときの右辺:
+$$\frac{1}{3}(k+1)((k+1)+1)((k+1)+2) = \frac{1}{3}(k+1)(k+2)(k+3)$$
+と一致する。数学的帰納法により、すべての自然数$n$について等式が成り立つ。
+\end{proof}
+
+\newpage
+
+\section*{問4. 不等式の証明}
+
+\subsection*{問題}
+すべての実数$x$について、
+$$|x+1| - |x-1| \leq 2$$
+が成り立つことを示せ。\\
+
+\kai
+\begin{proof}
+場合分けして考える。
+
+\vspace{10pt}
+\noindent
+\textbf{【ケース1】}$x \geq 1$のとき
+
+$x + 1 > 0\implies |x+1| = x+1$,\quad  $x - 1 \geq 0\implies |x-1| = x-1$\\
+よって、
+
+
+$$|x+1| - |x-1| = (x+1) - (x-1) = 2$$
+\noindent
+したがって、$|x+1| - |x-1| = 2 \leq 2$ 
+
+\vspace{10pt}
+\noindent
+\textbf{【ケース2】}$-1 \leq x < 1$のとき
+
+$x + 1 \geq 0\implies |x+1| = x+1$,\quad $x - 1 < 0\implies |x-1| = -(x-1) = 1-x$\\
+よって、
+
+$$|x+1| - |x-1| = (x+1) - (1-x) = 2x$$
+
+$-1 \leq x < 1$より、
+$$-2 \leq 2x < 2$$
+\noindent
+したがって、$|x+1| - |x-1| < 2$ 
+
+\vspace{10pt}
+\noindent
+\textbf{【ケース3】}$x < -1$のとき
+
+$x + 1 < 0\implies |x+1| = -(x+1) = -x-1$,\quad $x - 1 < 0\implies |x-1| = -(x-1) = 1-x$\\
+よって、
+
+$$|x+1| - |x-1| = (-x-1) - (1-x) = -2$$
+\noindent
+したがって、$|x+1| - |x-1| = -2 \leq 2$ 
+
+\vspace{10pt}
+\noindent
+\textbf{以上より、すべての場合において$|x+1| - |x-1| \leq 2$が成り立つ。}
+\end{proof}
+\end{document}
