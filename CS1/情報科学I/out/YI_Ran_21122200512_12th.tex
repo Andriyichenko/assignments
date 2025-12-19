@@ -1,0 +1,262 @@
+\documentclass[dvipdfmx,a4paper]{jsarticle} % 日文 jsarticle 文类，A4 纸，dvipdfmx 驱动（适合日文+图像）
+\usepackage{amsmath,amssymb,amsfonts,amsthm} % AMS 数学环境与符号（对齐公式、定理等）
+\usepackage[dvipdfmx]{graphicx}              % 插图：\includegraphics
+\usepackage{tikz}                            % TikZ 绘图
+\usetikzlibrary{positioning, intersections, calc, arrows.meta, math, through, shadows} % TikZ 扩展库
+\usepackage{tcolorbox}                       % 彩色盒子环境（例题框、定理框等）
+\tcbuselibrary{theorems,breakable}           % tcolorbox 的 “定理环境 + 可分页” 支持
+\usepackage{enumerate}                       % 自定义编号列表，例如 \begin{enumerate}[(1)]
+\usepackage{mathtools}                       % 对 amsmath 的扩展（:=号等）
+\usepackage{otf}                             % 和文 OTF 字体支持
+\usepackage{xspace}                          % 自动在命令后加适当空格（给 \ie 之类命令用）
+\usepackage{newpxtext}                       % Palatino 风格西文字体（正文）
+\usepackage[utf8]{inputenc} %中国語コンパイル環境-cjkホットショット % 传统 pLaTeX 下的 UTF-8 输入编码
+\usepackage{CJKutf8,CJKspace,CJKpunct} %中国語コンパイル環境 % CJK 中文/日文环境（配合 CJK 环境使用）
+\usepackage{pgfplots}                        % 函数图、数据图绘制（基于 TikZ）
+\usepackage{lastpage}                        % 获取最后一页页码（用来做 “Page x of y”）
+\usepackage{fancyhdr}  
+
+                      % 自定义页眉页脚
+\pagestyle{fancy}                            % 使用 fancyhdr 作为默认页式
+\fancyhf{}                                   % 清空默认页眉页脚
+\fancyhead[L]{\textsc{情報科学Iの第12回講義課題}} % 左页眉：课程/报告名称（自行修改）
+\fancyhead[R]{\textit{www.andreyis.com}}    % 右页眉：网站/个人信息（自行修改）
+\fancyfoot[C]{\thepage\quad \textit{of}\quad\pageref*{LastPage}} % 页脚中：Page x of y
+
+\fancypagestyle{plain}{                      % 定义 plain 页式（章节首页等）
+  \fancyhf{}                                 %   清空页眉页脚
+  \renewcommand{\headrulewidth}{0pt}         %   去掉页眉横线
+  \fancyfoot[C]{\thepage\quad \textit{of}\quad\pageref*{LastPage}} % 仍然保留页脚 Page x of y
+}
+
+\pgfplotsset{compat=1.18}                    % pgfplots 的版本兼容设置
+\usepackage{okumacro} %漢字ruby              % 日文汉字 ruby（\ruby{漢字}{かんじ}）
+
+\renewcommand{\abstractname}{注意事項}       % 把 abstract 环境的标题 “Abstract” 改成 “注意事項”
+
+\newtagform{textbf}[\textbf]{[}{]}           % 定义新的公式标签样式：加粗的 [1]
+\usetagform{textbf}                          % 使用上面定义的标签样式
+
+\newcommand*{\ie}{\textbf{\textit{i.e.}}\@\xspace} % 定义 \ie 命令（粗斜体 “i.e.”，自动空格）
+
+\renewcommand{\qedsymbol}{$\blacksquare$}   % 证明结尾的 QED 符号改为黑方块 ■（amsthm 的 proof 环境用）
+
+\newtcbtheorem[]{reidai}{補足}               % 定义 tcolorbox 风格的 “例題” 定理环境：\begin{reidai}{标题}{副标题}
+{fonttitle=\gtfamily\sffamily\bfseries\upshape\large, % 标题字体：日文ゴシック+无衬线+粗体
+ colframe=black,colback=black!15!white,     % 边框黑色，背景浅灰
+ rightrule=1pt,leftrule=1pt,bottomrule=2pt, % 右/左/下边框线条粗细
+ colbacktitle=black,theorem style=standard,breakable,arc=10pt} % 标题背景黑，正文可分页，圆角
+{tha}                                       % 该定理环境的内部 name（用于交叉引用）
+
+\renewcommand{\thefootnote}{\arabic{footnote}} % 脚注编号用阿拉伯数字
+
+\newtheoremstyle{mystyle}%                  % 定义新的定理样式 mystyle
+  {}%                      % 上部スペース （定理环境前的空白）
+  {}%                      % 下部スペース （定理环境后的空白）
+  {}%                      % 本文フォント （正文字体，默认）
+  {}%                      % 1行目のインデント量 （标题行缩进）
+  {\bfseries}%             % 見出しフォント （标题字体为粗体）
+  :%                       % 見出し後の句読点 （标题后面的标点，这里是冒号）
+  { }%                     % 見出し後のスペース （标题后与正文之间的空格）
+  {\thmname{#1}\thmnumber{ #2}\thmnote{ (#3)}} % 标题格式：Thm 1 (备注)
+
+\theoremstyle{mystyle}                       % 使用刚才定义的 mystyle 作为当前定理样式
+
+% \setcounter{section}{0}                    % （示例）设置 section 计数器为 0（目前注释掉）
+% \stepcounter{section}                      % （示例）把 section 计数器加一（目前注释掉）
+% セクションカウンターを使用するが、表示はしない新しいセクションコマンドを作成 % 说明文字
+
+\newtheorem{dfn}{\texttt{Def.}}[section]    % “定义”环境 dfn，标题显示为 “Def.”，按 section 编号
+\newtheorem{exm}[dfn]{\texttt{Ex.}}         % “例子”环境 exm，与 dfn 共用同一个编号
+\newtheorem{prop}[dfn]{\texttt{Prop.}}      % 命题环境 prop
+\newtheorem{lem}[dfn]{\texttt{Lem.}}        % 引理环境 lem
+\newtheorem{thm}[dfn]{\texttt{Thm.}}        % 定理环境 thm
+\newtheorem{cor}[dfn]{\texttt{Cor.}}        % 推论环境 cor
+\newtheorem{rem}[dfn]{\texttt{Rem.}}        % 备注环境 rem
+\newtheorem{fact}[dfn]{\texttt{Fact}}       % 事实环境 fact
+
+\renewcommand{\qedsymbol}{$\blacksquare$}   % 再次确认 QED 符号为黑方块（如果前面被别的包改掉）
+
+\usepackage{lipsum} % 用于生成示例文本（\lipsum[1-2] 生成假文）
+\usepackage{float} % 强制浮动（使用 [H] 选项固定图表位置）
+\usepackage{tikz} % 用于定位（重复引入 TikZ，其实可以和前面的合并）
+
+% 排版相关的自定义命令：印 “解答 / 証明 / 補足 / 注意” 标签的小盒子
+
+\newcommand{\kai}% 解答框标题：“解答”
+{\noindent
+\begin{tikzpicture}[scale=0.2, baseline=2.8pt]
+\draw (3.3,1.2) node{\large\textgt{解 答}}; % 文字“解答”
+\draw[thick, rounded corners=3pt,] (0,0)--(6.5,0)--(6.5,2.4)--(0,2.4)--cycle; % 带圆角的矩形外框
+\end{tikzpicture}} % 使用方式：写在解答前一行，\kai
+
+\newcommand{\shomei}% 証明框标题：“証明”
+{\noindent
+\begin{tikzpicture}[scale=0.2, baseline=2.8pt]
+\draw (3.3,1.2) node{\textgt{証 明}}; % 文字“証明”
+\draw[double,thick,rounded corners=3pt,] (0,0)--(6.5,0)--(6.5,2.4)--(0,2.4)--cycle; % 双线矩形外框
+\end{tikzpicture};} % 使用方式：写在证明前一行，\shomei
+
+% 補足框
+\newcommand{\hosoku}{\noindent
+\begin{tikzpicture}[scale=0.2, baseline=2.8pt]
+\draw (6,1) node{\large\textgt{補足}}; % 文字“補足”
+% 左侧小菱形装饰
+\fill (0,1)--(1,0)--(2,1)--(1,2)--cycle;
+\fill[gray] (1,1)--(2,0)--(3,1)--(2,2)--cycle;
+\fill (2,1)--(3,0)--(4,1)--(3,2)--cycle;
+% 右侧小菱形装饰
+\fill (10,1)--(11,0)--(12,1)--(11,2)--cycle;
+\fill[gray] (9,1)--(10,0)--(11,1)--(10,2)--cycle;
+\fill (8,1)--(9,0)--(10,1)--(9,2)--cycle;
+\end{tikzpicture};} % 使用方式：\hosoku 后面接补充说明文字
+
+% 注意框
+\newcommand{\chui}{\noindent
+\begin{tikzpicture}[scale=0.2, baseline=2.8pt]
+\fill (0,0)--(6.5,0)--(6.5,2.2)--(0,2.2); % 填满背景色（默认黑）
+\draw (3.3,1) node[white]{\large\textgt{注意！}}; % 中间白字“注意！”
+\draw[thick] (0,0)--(6.5,0)--(6.5,2.2)--(0,2.2)--cycle; % 外框
+\end{tikzpicture};} % 使用方式：\chui 后面写注意内容
+
+% 标题信息：可以根据实际报告修改 title / author / date
+
+\title{\vspace{-3cm}\textsc{情報科学Iの第12回講義課題}}  % 标题：目前设置为“空”，仅挤掉竖直空间（可改成真正的标题）
+\author{\texttt{YI Ran} - $\mathnormal{21122200512}$\\ \texttt{andreyi@outlook.jp}}  % 作者：姓名+学号+邮箱
+\date{\today}  % 日期：自动使用当天日期
+
+\begin{document}
+\maketitle                                   % 输出标题页
+\thispagestyle{plain}                        % 这一页使用 plain 样式（我们前面定义过）
+
+% 下方是可选的 QR 码 + 文字示例，目前全部注释掉
+% \vspace{-0.4cm}
+% \begin{figure}[H]
+% \centering
+% \begin{tikzpicture}[remember picture, overlay]
+%    \node[anchor=north east] at (current page.north east) {%
+%         \includegraphics[width=2cm]{pics/qr.png} % 这里改成你真正的 QR 图片路径
+%     };
+%     \node[anchor=north east, yshift=-2cm] at (current page.north east) {デジタル版はここ};
+% \end{tikzpicture}
+% \label{fig:my_label}
+% \end{figure}
+
+% \begin{abstract} %概要
+  % 注意事項：如果需要写“注意事项”，可取消注释此 abstract 环境
+% \end{abstract}
+
+% 例題环境示例（使用 \begin{reidai}{主标题}{副标题}）
+% \begin{reidai}{2次方程式}{解答}
+% ここに例題の内容を書く。
+% \end{reidai}
+% \begin{proof}
+% ここに証明を書く。
+% \end{proof}
+
+\section*{\textbf{問1}\quad \normalfont\Large オイラー小道について答えよ} % 第一节标题（可以直接改文字）
+\subsection*{(1)\quad 図1の「ケーニヒスベルグの橋」を元にして、地域（A～D）を頂点、橋（a～g）を辺とするグラフとして簡略化せよ}% 在这里写正文内容
+\kai\\
+
+その結果、次のような連結グラフ$\mathbf{G}$が得られる。\\
+
+\begin{tikzpicture}[>=Stealth, thick,
+  v/.style={circle, draw, minimum size=9mm, inner sep=0pt}
+]
+% 顶点 (端点)
+\node[v] (C) at (0, 1.6) {C};
+\node[v] (B) at (0,-1.6) {B};
+\node[v] (A) at (-2.2,0) {A};
+\node[v] (D) at ( 2.2,0) {D};
+
+% 边 (线段/桥)
+\draw (B) to[bend left=25] node[pos=0.55, below left] {$a$} (A);
+\draw (B) to[bend right=25] node[pos=0.55, below] {$b$} (A);
+
+\draw (A) to[bend left=20] node[pos=0.55, above left] {$c$} (C);
+\draw (A) to[bend right=25] node[pos=0.55, above left] {$d$} (C);
+
+\draw (A) -- node[pos=0.5, below] {$e$} (D);  % 修正：直线连接
+
+\draw (B) to[bend right=15] node[pos=0.55, below right] {$f$} (D);
+
+\draw (C) to[bend left=12] node[pos=0.55, above] {$g$} (D);
+% Legend with box
+\draw[rounded corners, fill=white, draw=black] (3.8, -1) rectangle (5.8, 1);
+\node at (4.8, 0.6) {\textbf{凡例}};
+\node[v, minimum size=3mm] at (4.2, 0) {};
+\node[anchor=west] at (4.6, 0) {頂点};
+\draw[thick] (4.05, -0.5) -- (4.35, -0.5);
+\node[anchor=west] at (4.6, -0.5) {辺};
+\node[font=\bfseries] at (0, -2.5) {グラフ$\mathbf{G}$};
+\end{tikzpicture}
+\vspace{0.5cm}
+\subsection*{(2)\quad ケーニヒスベルグの橋にオイラー小道は存在するか？根拠と併せて答えよ。}
+\kai\\
+
+\indent
+(i)\quad ケーニヒスベルグの橋にオイラー小道は存在しない。\\
+\indent
+(ii)\quad 上の連結グラフ$\mathbf{G} = (V, E)$がオイラー小道をもつための必要十分条件は、グラフ$\mathbf{G}$の全頂点の次数が偶数である。(詳しい証明は以下の補足1に示す)\\
+\ie 連結グラフ$\mathbf{G} = (V, E)$がオイラー小道をもつ $ \iff \forall v\in V,\deg_G (v) \equiv 0 \pmod{2}$。\\
+しかし、$\mathbf{G}$の頂点A、B、C、Dの次数はそれぞれ5、3、3、3であり、すべて奇数である。したがって、オイラー小道は存在しない。
+\ie $ \forall v\in V, \deg_G(v)\equiv 1 \pmod{2}\implies $連結グラフ$\mathbf{G} = (V, E)$がオイラー小道をもたない。\\
+\newpage
+\begin{reidai}{連結グラフ$\mathbf{G}=(V,E)$について、\\ 以下の命題$P\iff Q$であることを証明する}{q}
+\vspace{0.5em}
+  $\mathbf{命題P}$: グラフ$\mathbf{G}$はオイラー小道をもつ。\\
+  $\mathbf{命題Q}$: グラフ$\mathbf{G}$のすべての頂点の次数が偶数である。\\
+\end{reidai}
+
+\begin{proof}
+  \ \\
+  $ \mathbf{(1)\quad P\implies Q:}$\\
+  オイラー小道を$C$とする。$C$はグラフ$\mathbf{G}$のすべての辺をちょうど一度ずつ通る閉路である。\\
+  \indent
+  グラフ$\mathbf{G}$の$\forall \nu\in V$について、$C$が頂点vを通るたびに、vから出る辺とvに入る。\ie 頂点$\nu$を通るたびに、$\nu$の次数が2増える。したがって、グラフ$\mathbf{G}$のすべての頂点の次数は偶数である。\ie $\deg_G(\nu)\equiv 0 \pmod{2}$となる。\\
+
+  \noindent
+  $\mathbf{(2)\quad P\impliedby Q:}$\\
+  グラフ$\mathbf{G}$における最長の小道を$W$とする。\ie $W = \nu_0,e_1,\dots ,e_k,\nu_k$\\
+  \indent
+  $W$は最長であるため、これ以上、未通過の辺を使って$W$を延長することはできないものとする。\\
+  \indent
+  $\mathbf{(i)\quad W}$が閉路であること証明する\\
+  \noindent
+  終点$\nu_k$が始点$\nu_0$と異なると仮定する$(\nu_0 \neq \nu_k)$\\
+  小道$W$上の頂点$\nu$について、$W$が$\nu$を通ったときに、$\nu$の次数が2増える。その中間点としての$\nu_k$を$m$回通ったとすると、$\nu_k$の次数は$2m$増える。しかし、$\nu_k$は終点であるため、$W$上で$\nu_k$から出る辺は1本しかない。よって、$\nu_k$の次数は奇数である$(\nu_0 \neq \nu_k)$。\\
+  \ie $\deg_G(\nu_k)\equiv 1 \pmod{2}$となり、グラフ$\mathbf{G}$のすべての頂点の次数が偶数であるという仮定に矛盾する。ここで、$W$は極大であるから、$\nu_k$に接続する辺はすべて$W$に含まれている。
+  したがって、$\nu_0 = \nu_k$でなければいけない、$W$は閉路である。\\
+
+  \indent
+  $\mathbf{(ii)\quad W}$が$G$の全ての辺を通ることを証明する\\
+  \noindent
+  $W$がグラフ$\mathbf{G}$のすべての辺を通らない\ie $E(W) \subsetneq E(\mathbf{G})$と仮定する。この時、未通過の辺$e\left\{u,w \right\}\in E(\mathbf{G})$が存在する。ここで、$u\in V(W)$であるとする。$\mathbf{(i)}$より、$W$は閉路であるため、始点と終点を自由にシフトできる。そこで、$u$を始点かつ終点とすると、
+  $$ W = u \rightarrow\dots\rightarrow u $$
+  となり、この閉路$W$に、未接続の辺$e\left\{u,w \right\}$を接続して延長することを考えると\\
+  $$ W^{\prime} = w\stackrel{e}{\rightarrow} u \stackrel{W^{\prime}}{\rightarrow} u $$
+  となり、よって$W^{\prime}$の長さは$|E(W)| + 1$となり、これは$W$が最長であるという仮定に矛盾する。\\
+  したがって、$W$はグラフ$\mathbf{G}$のすべての辺を通る。\\
+
+  \noindent
+  以上の$\mathbf{(1)}$と$\mathbf{(2)}$により、命題$\mathbf{P\iff Q}$が成立する。
+
+
+
+
+\end{proof}
+
+\newpage
+\section*{\textbf{問2}\quad \normalfont\Large 四色問題について、図の近畿地方の白地図を四色で塗り分けよ}
+\kai\\
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.65\linewidth]{../pics/12th_2.jpg}
+  \vspace{6mm}
+  \caption{近畿地方の四色塗り分け図}
+  \label{fig:fourcolor-kinki}
+\end{figure}
+
+
+\end{document}
