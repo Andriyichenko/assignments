@@ -17,6 +17,7 @@ Click the description text in the table below to view the PDF files directly:
 | **Week 2 Submission** | [Student submission for Week 2](CS1/week2/out/YI_Ran_21122200512.pdf) |
 | **10th Assignment** | [Logic and truth tables](CS1/情報科学I/out/YI_Ran_21122200512_10th.pdf) |
 | **11th Assignment** | [Logic operations](CS1/情報科学I/out/YI_Ran_21122200512_11th.pdf) |
+| **12th Assignment** | [Proof of the existence of an Eulerian path (circuit)](CS1/情報科学I/out/YI_Ran_21122200512_12th.pdf) |
 
 ## Compilation
 
