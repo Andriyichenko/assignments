@@ -1,5 +1,11 @@
 # CS1 Assignments
 
+[![Repo](https://img.shields.io/badge/repo-Andriyichenko%2Fassignments-555)](https://github.com/Andriyichenko/assignments)
+![Last Commit](https://img.shields.io/github/last-commit/Andriyichenko/assignments)
+![Repo Size](https://img.shields.io/github/repo-size/Andriyichenko/assignments)
+![License](https://img.shields.io/github/license/Andriyichenko/assignments)
+![LaTeX](https://img.shields.io/badge/LaTeX-TeX%20Live-0f7d5c)
+
 This repository contains LaTeX source files and compiled PDF documents for the Computer Science 1 (CS1) course.
 
 ## Directory Structure
