@@ -1,0 +1,227 @@
+\documentclass[dvipdfmx,a4paper]{jsarticle} % 日文 jsarticle 文类
+\usepackage{amsmath,amssymb,amsfonts,amsthm} % AMS 数学环境
+\usepackage[dvipdfmx]{graphicx}              % 插图
+\usepackage{tikz}                            % TikZ 绘图
+\usetikzlibrary{positioning, intersections, calc, arrows.meta, math, through, shadows}
+\usepackage{tcolorbox}                       % 彩色盒子
+\tcbuselibrary{theorems,breakable}
+\usepackage{enumitem}                        % 自定义列表
+\usepackage{mathtools}                       % amsmath 扩展
+\usepackage{otf}                             % 和文 OTF 字体
+\usepackage{xspace}                          % 自动空格
+\usepackage{newpxtext}                       % Palatino 风格西文字体
+\usepackage[utf8]{inputenc}                  % UTF-8 编码
+\usepackage{CJKutf8,CJKspace,CJKpunct}       % CJK 环境
+\usepackage{pgfplots}                        % 函数图
+\usepackage{lastpage}                        % 获取总页数
+\usepackage{fancyhdr}                        % 自定义页眉页脚
+
+% --- 页眉页脚设置 ---
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\textsc{Cross-cultural Seminar Week 11-12}} 
+\fancyhead[R]{\textit{www.andreyis.com}}
+\fancyfoot[C]{\thepage\quad \textit{of}\quad\pageref*{LastPage}}
+
+\fancypagestyle{plain}{
+  \fancyhf{}
+  \renewcommand{\headrulewidth}{0pt}
+  \fancyfoot[C]{\thepage\quad \textit{of}\quad\pageref*{LastPage}}
+}
+
+\pgfplotsset{compat=1.18}
+\usepackage{okumacro} 
+
+\renewcommand{\abstractname}{注意事項}
+
+\newtagform{textbf}[\textbf]{[}{]}
+\usetagform{textbf}
+
+\newcommand*{\ie}{\textbf{\textit{i.e.}}\@\xspace}
+\renewcommand{\qedsymbol}{$\blacksquare$}
+
+% --- 定义定理环境 ---
+\newtcbtheorem[]{reidai}{例題}
+{fonttitle=\gtfamily\sffamily\bfseries\upshape\large,
+ colframe=black,colback=black!15!white,
+ rightrule=1pt,leftrule=1pt,bottomrule=2pt,
+ colbacktitle=black,theorem style=standard,breakable,arc=10pt}
+{tha}
+
+\renewcommand{\thefootnote}{\arabic{footnote}}
+
+\newtheoremstyle{mystyle}
+  {}{}
+  {}{}
+  {\bfseries}
+  {:}
+  { }
+  {\thmname{#1}\thmnumber{ #2}\thmnote{ (#3)}}
+
+\theoremstyle{mystyle}
+
+\newtheorem{dfn}{\texttt{Def.}}[section]
+\newtheorem{exm}[dfn]{\texttt{Ex.}}
+\newtheorem{prop}[dfn]{\texttt{Prop.}}
+\newtheorem{lem}[dfn]{\texttt{Lem.}}
+\newtheorem{thm}[dfn]{\texttt{Thm.}}
+\newtheorem{cor}[dfn]{\texttt{Cor.}}
+\newtheorem{rem}[dfn]{\texttt{Rem.}}
+\newtheorem{fact}[dfn]{\texttt{Fact}}
+
+\usepackage{lipsum}
+\usepackage{float}
+\usepackage{parskip}
+\usepackage{helvet}
+\usepackage[T1]{fontenc}
+\usepackage{geometry}
+
+% --- 自定义标签命令 ---
+\newcommand{\kai}
+{\noindent
+\begin{tikzpicture}[scale=0.2, baseline=2.8pt]
+\draw (3.3,1.2) node{\large\textgt{解 答}};
+\draw[thick, rounded corners=3pt,] (0,0)--(6.5,0)--(6.5,2.4)--(0,2.4)--cycle;
+\end{tikzpicture}}
+
+\newcommand{\shomei}
+{\noindent
+\begin{tikzpicture}[scale=0.2, baseline=2.8pt]
+\draw (3.3,1.2) node{\textgt{証 明}};
+\draw[double,thick,rounded corners=3pt,] (0,0)--(6.5,0)--(6.5,2.4)--(0,2.4)--cycle;
+\end{tikzpicture};}
+
+\newcommand{\hosoku}{\noindent
+\begin{tikzpicture}[scale=0.2, baseline=2.8pt]
+\draw (6,1) node{\large\textgt{補足}};
+\fill (0,1)--(1,0)--(2,1)--(1,2)--cycle;
+\fill[gray] (1,1)--(2,0)--(3,1)--(2,2)--cycle;
+\fill (2,1)--(3,0)--(4,1)--(3,2)--cycle;
+\fill (10,1)--(11,0)--(12,1)--(11,2)--cycle;
+\fill[gray] (9,1)--(10,0)--(11,1)--(10,2)--cycle;
+\fill (8,1)--(9,0)--(10,1)--(9,2)--cycle;
+\end{tikzpicture};}
+
+\newcommand{\chui}{\noindent
+\begin{tikzpicture}[scale=0.2, baseline=2.8pt]
+\fill (0,0)--(6.5,0)--(6.5,2.2)--(0,2.2);
+\draw (3.3,1) node[white]{\large\textgt{注意！}};
+\draw[thick] (0,0)--(6.5,0)--(6.5,2.2)--(0,2.2)--cycle;
+\end{tikzpicture};}
+
+% --- 页面设置 ---
+\geometry{left=2.5cm, right=2.5cm, top=2.5cm, bottom=2.5cm}
+\renewcommand{\familydefault}{\sfdefault}
+
+% --- 自定义问答框 (QA Box) ---
+\newtcolorbox{qa}[1]{
+  colback=gray!10!white,
+  colframe=gray!50!black,
+  title=\textbf{#1},
+  fonttitle=\bfseries,
+  sharp corners,
+  boxrule=0.5pt,
+  left=2mm, right=2mm, top=2mm, bottom=2mm
+}
+
+% --- 标题信息 ---
+\title{\vspace{-3cm} Plan a small performative intervention}
+\author{\texttt{YI Ran} - $\mathnormal{21122200512}$\\ \texttt{andreyi@outlook.jp}}
+\date{\today}
+
+\begin{document}
+\maketitle
+\thispagestyle{plain}
+\vspace{2em}
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Create an experience of encounter, a performative action for an audience of one}
+    \item Complete within approx. 15 minutes
+    \item Something low-tech, feasible would be good enough, but be creative and inventive as you wish
+    \item Be ready to perform three times for an \textit{other} at Week 12 class ($25^{\mathtt{th}}$ December)
+\end{itemize}
+
+\vspace{0.5cm}
+
+%内容
+
+\begin{qa}{Identify a keyword (preferably a verb) you would like to explore in this experimentation on the top of ``encounter''. E.g. be present, exchange, share, play, reminisce, remember...}
+\textbf{Exchange}
+\end{qa}
+\vspace{1em}
+
+\begin{qa}{Plan the action. What is involved in your piece? Start by making a list of elements.}
+\textbf{Elements:} A Chinese fan, A4 paper, a black pen, and a small sign saying ``fan meeting point''.
+\vspace{0.3cm}
+
+\textbf{Action:}
+\begin{enumerate}
+    \item \textbf{Quiet Encounter (2 min):} I wait at the ``fan meeting point''. When the audience arrives, I greet them: ``Hello, today you meet a Chinese fan. For 10 minutes, we share wind, memory, and drawing.'' I explain they can choose to talk or stay silent.
+    \item \textbf{Exchange of Wind (3 min):} I slowly open the fan and fan the audience to convey emotion and rhythm. Then, I hand the fan to the audience: ``Now you are the performer. Please fan me three times.''
+    \item \textbf{Exchange of Memory (3-4 min):} I ask: ``When you feel wind, what memory or image comes to you?'' As they share (or think), I draw a simple symbol/line of their story on the paper.\\
+    \noindent 
+    \textbf{-Example:}\quad when I was a child on summer nights, my grandmother would fan me with a uchiwa, and I would fall asleep feeling safe in the breeze.\\
+    \noindent
+    \textbf{-Draw:}\quad Draw three thin, curved lines of wind flowing from the uchiwa toward the bed.
+    \item \textbf{Exchange of Role (2-3 min):} I hand the paper and pen to the audience and pose with the fan. I ask them to draw my ``feeling'' in this moment (simple lines are FINE).
+    \item \textbf{Ending (1-2 min):} The audience chooses one drawing to keep; I keep the other. I close the fan: ``This fan will remember you.''
+\end{enumerate}
+\end{qa}
+
+\begin{qa}{What is the takeaway for the audience? What do they get out of experiencing your piece?}
+The audience feels a private and gentle encounter with a ``Chinese fan''. They experience a moment of non-verbal and verbal connection through wind and art.
+\vspace{0.2cm}
+
+They take home a simple drawing that is connected to their own memory or the shared moment.
+\end{qa}
+\vspace{0.5cm}
+
+\begin{qa}{What is the role of audience? What is the audience member expected to do or how are they supposed to receive it? Are they supposed to keep silent, or are they invited to respond? How do you communicate that to the audience?}
+The audience is an active participant.
+\begin{itemize}
+    \item They receive the wind, talk about a memory/image, fan me, and make a simple drawing.
+    \item They can choose to speak or stay silent (this is explicitly told at the start: ``You can talk, or stay silent. It's your choice'').
+    \item Instructions are given verbally by me at the beginning of each step.
+\end{itemize}
+\end{qa}
+\vspace{2em}
+
+\begin{qa}{Invitation/instructions to the audience member? Anything they are asked to bring?}
+\textbf{Invitation:} Verbal intro at the start: ``This is a one-to-one performance with a Chinese fan, about 10 minutes.''
+\vspace{0.2cm}
+
+\textbf{Requirements:} No need to bring anything. Just themselves.
+\end{qa}
+\vspace{2em}
+
+\begin{qa}{Need for support from the instructor? Need for an usher? Any tech element, props?}
+\textbf{Support:} An usher is needed to guide the audience to the ``fan meeting point'' and tell them it is a 10-minute solo performance.
+\vspace{0.2cm}
+
+\textbf{Tech element:} No technology needed.
+\vspace{0.2cm}
+
+\textbf{Props:}
+\begin{itemize}
+    \item 1 Chinese fan (my own).
+    \item 2\textasciitilde 3 sheets of A4 white paper.
+    \item 1\textasciitilde 2 black pens.
+    \item A small floor sign (``fan meeting point'').
+\end{itemize}
+\end{qa}
+\vspace{2em}
+
+\begin{qa}{Duration? How long does the experience last?}
+Approximately 10--12 minutes \textbf{(Max 15 minutes)}.
+\end{qa}
+\vspace{2em}
+
+\begin{qa}{Venue?}
+In Room 801 of Co-Learning II. Specifically, the quiet space  (marked as ``fan meeting point'').
+\end{qa}
+\vspace{3em}
+
+\begin{qa}{Title of the piece?}
+Meeting a Chinese Fan
+\end{qa}
+
+\end{document}
