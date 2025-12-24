@@ -24,11 +24,12 @@ Click the description text in the table below to view the PDF files directly:
 | **10th Assignment** | [Logic and truth tables](CS1/情報科学I/out/YI_Ran_21122200512_10th.pdf) |
 | **11th Assignment** | [Logic operations](CS1/情報科学I/out/YI_Ran_21122200512_11th.pdf) |
 | **12th Assignment** | [Proof of the existence of an Eulerian path (circuit)](CS1/情報科学I/out/YI_Ran_21122200512_12th.pdf) |
+| **13th Assignment** | [Automaton](CS1/情報科学I/out/YI_Ran_21122200512_13th.pdf) |
 
 ## Assignment List of Cross-Culture (PDFs)
 | Assignment Name | Description |
 | :--- | :--- |
-| **Week 11** | [Plan a small performative intervention](CS1/Cross-Culture/out/YI_Ran_21122200512_11th.pdf) |
+| **Week 11** | [Plan a small performative intervention](Cross-Culture/out/YI_Ran_21122200512_11th.pdf) |
 
 ## Compilation
 
@@ -64,11 +65,12 @@ dvipdfmx week2.dvi
 | **第10回 課題** | [論理と真理値表](CS1/情報科学I/out/YI_Ran_21122200512_10th.pdf) |
 | **第11回 課題** | [論理演算](CS1/情報科学I/out/YI_Ran_21122200512_11th.pdf) |
 | **第12回 課題** | [オイラー小道(閉路)の証明](CS1/情報科学I/out/YI_Ran_21122200512_12th.pdf) |
+| **第13回 課題** | [オートマトン](CS1/情報科学I/out/YI_Ran_21122200512_13th.pdf) |
 
 ## Cross-Culture課題 (PDFs)
 | 課題名 | 説明 |
 | :--- | :--- |
-| **Week 11** | [Plan a small performative intervention](CS1/Cross-Culture/out/YI_Ran_21122200512_11th.pdf) |
+| **Week 11** | [Plan a small performative intervention](Cross-Culture/out/YI_Ran_21122200512_11th.pdf) |
 
 ## コンパイル方法
 
