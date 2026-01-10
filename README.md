@@ -25,6 +25,7 @@ Click the description text in the table below to view the PDF files directly:
 | **11th Assignment** | [Logic operations](CS1/情報科学I/out/YI_Ran_21122200512_11th.pdf) |
 | **12th Assignment** | [Proof of the existence of an Eulerian path (circuit)](CS1/情報科学I/out/YI_Ran_21122200512_12th.pdf) |
 | **13th Assignment** | [Automaton](CS1/情報科学I/out/YI_Ran_21122200512_13th.pdf) |
+| **14th Assignment** | [Number Theory](CS1/情報科学I/out/YI_Ran_21122200512_14th.pdf) |
 
 ## Assignment List of Cross-Culture (PDFs)
 | Assignment Name | Description |
@@ -66,6 +67,7 @@ dvipdfmx week2.dvi
 | **第11回 課題** | [論理演算](CS1/情報科学I/out/YI_Ran_21122200512_11th.pdf) |
 | **第12回 課題** | [オイラー小道(閉路)の証明](CS1/情報科学I/out/YI_Ran_21122200512_12th.pdf) |
 | **第13回 課題** | [オートマトン](CS1/情報科学I/out/YI_Ran_21122200512_13th.pdf) |
+| **第14回 課題** | [数論](CS1/情報科学I/out/YI_Ran_21122200512_14th.pdf) |
 
 ## Cross-Culture課題 (PDFs)
 | 課題名 | 説明 |

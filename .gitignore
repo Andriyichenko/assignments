@@ -1,1 +1,6 @@
 GEMINI.md
+.vscode/
+.DS_Store
+.gitignore
+out/
+分析.tex
