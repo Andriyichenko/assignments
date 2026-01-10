@@ -3,4 +3,5 @@ GEMINI.md
 .DS_Store
 .gitignore
 out/
+test.tex
 分析.tex
