@@ -31,6 +31,8 @@ Click the description text in the table below to view the PDF files directly:
 | Assignment Name | Description |
 | :--- | :--- |
 | **Week 11** | [Plan a small performative intervention](Cross-Culture/out/YI_Ran_21122200512_11th.pdf) |
+| **Final 1/2** | [Reflective essay on one-to-one performance](Cross-Culture/out/YI_Ran_21122200512_one-to-one-performance.pdf) |
+| **Final 2/2** | [Reflective essay on activities around The Window of the Spaceship "In-Between"](Cross-Culture/out/YI_Ran_21122200512_the-window-of-the-spaceship.pdf) |
 
 ## Compilation
 
@@ -73,6 +75,8 @@ dvipdfmx week2.dvi
 | 課題名 | 説明 |
 | :--- | :--- |
 | **Week 11** | [Plan a small performative intervention](Cross-Culture/out/YI_Ran_21122200512_11th.pdf) |
+| **Final 1/2** | [Reflective essay on one-to-one performance](Cross-Culture/out/YI_Ran_21122200512_one-to-one-performance.pdf) |
+| **Final 2/2** | [Reflective essay on activities around The Window of the Spaceship "In-Between"](Cross-Culture/out/YI_Ran_21122200512_the-window-of-the-spaceship.pdf) |
 
 ## コンパイル方法
 

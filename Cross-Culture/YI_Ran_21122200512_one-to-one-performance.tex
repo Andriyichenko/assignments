@@ -1,0 +1,95 @@
+% !!! 编译说明: 请使用 XeLaTeX 编译器
+
+\documentclass[12pt]{article}
+
+% -----------------------------------------------------------------
+% 1. 页面设置
+% -----------------------------------------------------------------
+\usepackage[a4paper, margin=2.5cm]{geometry}
+
+% -----------------------------------------------------------------
+% 2. 行距设置
+% -----------------------------------------------------------------
+\usepackage{setspace}
+\doublespacing
+
+% -----------------------------------------------------------------
+% 3. 字体设置
+% -----------------------------------------------------------------
+\usepackage{fontspec}
+\setmainfont{Times New Roman}
+
+% -----------------------------------------------------------------
+% 4. 段落格式
+% -----------------------------------------------------------------
+\usepackage{parskip}
+\setlength{\parindent}{1.27cm} 
+\setlength{\parskip}{0pt}      
+
+% -----------------------------------------------------------------
+% 5. 页眉设置
+% -----------------------------------------------------------------
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{} 
+\rhead{\thepage} 
+\renewcommand{\headrulewidth}{0pt}
+
+% -----------------------------------------------------------------
+% 6. 个人信息录入
+% -----------------------------------------------------------------
+% 注意：右边的引号我帮你改成了 '' (两个单引号)，这样才会显示弯引号 ”
+\newcommand{\myTitle}{Reflection on One-to-One performance:\\ ``Meeting a Chinese Fan''} 
+\newcommand{\myAuthor}{Yi Ran -- 21122200512}
+\newcommand{\myAffiliation}{Department of Mathematical Sciences, Ritsumeikan University} 
+\newcommand{\myCourse}{35091: Cross-cultural Seminar (G1)}
+\newcommand{\myInstructor}{Dr. Shoji}
+\newcommand{\myDate}{\today}
+
+% -----------------------------------------------------------------
+% 正文开始
+% -----------------------------------------------------------------
+\begin{document}
+
+% =================================================================
+% 封面页 (手动排版，不使用 titlepage 环境以保证页码连续)
+% =================================================================
+\begin{center}
+    \vspace*{3cm} % 下移
+    
+    \textbf{\Large \myTitle} % 标题
+    
+    \vspace{2\baselineskip} % 空行
+    
+    % 信息
+    \myAuthor \\
+    \myAffiliation \\
+    \myCourse \\
+    \myInstructor \\
+    \myDate
+\end{center}
+
+\newpage % 强制换页！这里之后就是第 2 页
+% =================================================================
+
+% --- 正文部分 ---
+
+% 正文第一页顶部重复标题
+\begin{center}
+    \textbf{\myTitle}
+\end{center}
+\vspace{\baselineskip} 
+
+My performance, \textit{Meeting a Chinese Fan}, was designed to share an essence of Chinese culture not through physical objects, but through a shared atmosphere of calm. Rather than relying on elaborate sets or technology, I intended to use my instructions as tools to guide the audience into a state of quiet introspection. My plan for this ten-to-fifteen-minute session centered on the keyword ``exchange'', aiming to dismantle the traditional barrier between performer and audience. By inviting the audience to swap roles with me—becoming an equal partner rather than a passive observer—I hoped to create a safe environment where we felt free to speak or remain silent, knowing that silence itself can be a profound form of communication in One-to-One encounters.
+
+Many people asked me, ``What inspired this specific approach?'' The primary inspiration was the Chinese fan itself, a deceptively simple object that carries deep cultural associations with summer, cooling wind, and the act of care. Beyond the object, I was drawn to the power of deliberate speech to act as a gentle guide. In the setting of a one-to-one performance, where the physical distance between actors is collapsed, language becomes a bridge. I believed that a soft vocal pace could help the audience transition from their busy daily rhythm into a private, shared space of attention.
+
+On the day of the presentation, I established a small area designated as the ``Fan Meeting Point'', waiting for a participant to step into this created space naturally. Upon the participant's arrival, I greeted him/her with a simple framing of our time together, ``Hello, today you will meet a Chinese fan. We will share wind and memory here.''
+
+We began with a ``Encounter'' to settle our energy, which naturally flowed into an ``Exchange of Wind.'' Here, I used the fan to establish a rhythmic connection before handing the Chinese fan to the participant, inviting him/her to fan me in return. This shift in agency was important, as it physically demonstrated our shared responsibility for the performance. As the wind continued, I asked, ``When you feel wind, what memory or images come to you?'' While they reflected on this question, I fanned the air toward other areas around him/her without actually directing the breeze at him/her, because I wanted to create the illusion that I was continuously fanning him/her, as a way to test whether the participant had entered a state of mental flow. And then, I asked him/her to open  his/her eyes and gave him/her a small piece of paper to draw the image of the wind by my description. Firstly, I traced simple lines on paper to capture the essence of their story, eventually handing the pen over so they could draw my feeling in return.
+
+However, the actual impact of this structure differed significantly from my intentions. Although I aimed to create calm, contrast, and reflection, the feedback from one participant revealed a stark disconnect between my goals and his experience. He offered a critical perspective, noting that the title \textit{Meeting a Chinese Fan} felt like a misleading pun. He spent the session wondering if I had an ``enthusiastic supporter'' rather than focusing on the object itself. This misdirection, combined with my confusing instructions---telling him to ``sit anywhere'' only to move him to a specific spot later---made him feel that the experience was ``pointless'' and untrustworthy.
+
+Actually, this was also part of the performance, because what I said was only a suggestion, just like a whisper of the wind. You could also have said ``no'' to me, or just stayed here and done nothing. But unfortunately, no audience member ever said ``no'' to me, so I had to follow my original plan. Although it might have seemed chaotic, that confusion was exactly what I wanted to express that your thoughts should be as free as the wind, not led by someone else’s direction. As for the title ``fan,'' I think it works whether you understand it as ``a Chinese fan'' (the object) or ``a fan of Chinese culture''. In either case, it doesn’t really affect the core purpose of the performance. Nevertheless, I remain truly grateful for this audience member’s feedback. This experiment showed me that my performance might be too complex. I acknowledge that my guidance may not have been entirely clear, and I recognize that it is a flaw that I need to address.
+
+\end{document}
