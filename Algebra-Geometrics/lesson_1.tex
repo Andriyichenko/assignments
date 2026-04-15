@@ -1,0 +1,242 @@
+\documentclass[dvipdfmx,a4paper]{jsarticle} % 日文 jsarticle 文类，A4 纸，dvipdfmx 驱动（适合日文+图像）
+\usepackage{amsmath,amssymb,amsfonts,amsthm,mathrsfs} % AMS 数学环境与符号（对齐公式、定理等）
+\usepackage[dvipdfmx]{graphicx}              % 插图：\includegraphics
+\usepackage{tikz}                            % TikZ 绘图
+\usetikzlibrary{positioning, intersections, calc, arrows.meta, math, through, shadows,automata} % TikZ 扩展库
+\usepackage{caption}                        % 图表标题控制
+\usepackage{tcolorbox}                       % 彩色盒子环境（例题框、定理框等）
+\tcbuselibrary{theorems,breakable}           % tcolorbox 的 “定理环境 + 可分页” 支持
+\usepackage{enumerate}                       % 自定义编号列表，例如 \begin{enumerate}[(1)]
+\usepackage{mathtools}                       % 对 amsmath 的扩展（:=号等）
+\usepackage{otf}                             % 和文 OTF 字体支持
+\usepackage{xspace}                          % 自动在命令后加适当空格（给 \ie 之类命令用）
+\usepackage{newpxtext}                       % Palatino 风格西文字体（正文）
+\usepackage[utf8]{inputenc} %中国語コンパイル環境-cjkホットショット % 传统 pLaTeX 下的 UTF-8 输入编码
+\usepackage{CJKutf8,CJKspace,CJKpunct} %中国語コンパイル環境 % CJK 中文/日文环境（配合 CJK 环境使用）
+\usepackage{pgfplots}                        % 函数图、数据图绘制（基于 TikZ）
+\usepackage{lastpage}                        % 获取最后一页页码（用来做 “Page x of y”）
+\usepackage{fancyhdr}                        % 自定义页眉页脚
+\pagestyle{fancy}                            % 使用 fancyhdr 作为默认页式
+\fancyhf{}                                   % 清空默认页眉页脚
+\fancyhead[L]{\textsc{数理科学特論3の第1回講義課題}} % 左页眉：课程/报告名称（自行修改）
+\fancyhead[R]{\textit{www.andreyis.com}}    % 右页眉：网站/个人信息（自行修改）
+\fancyfoot[C]{\thepage\quad \textit{of}\quad\pageref*{LastPage}} % 页脚中：Page x of y
+
+\fancypagestyle{plain}{                      % 定义 plain 页式（章节首页等）
+  \fancyhf{}                                 %   清空页眉页脚
+  \renewcommand{\headrulewidth}{0pt}         %   去掉页眉横线
+  \fancyfoot[C]{\thepage\quad \textit{of}\quad\pageref*{LastPage}} % 仍然保留页脚 Page x of y
+}
+
+\pgfplotsset{compat=1.18}                    % pgfplots 的版本兼容设置
+\usepackage{okumacro} %漢字ruby              % 日文汉字 ruby（\ruby{漢字}{かんじ}）
+
+\renewcommand{\abstractname}{注意事項}       % 把 abstract 环境的标题 “Abstract” 改成 “注意事項”
+
+\newtagform{textbf}[\textbf]{[}{]}           % 定义新的公式标签样式：加粗的 [1]
+\usetagform{textbf}                          % 使用上面定义的标签样式
+
+\newcommand*{\ie}{\textbf{\textit{i.e.}}\@\xspace} % 定义 \ie 命令（粗斜体 “i.e.”，自动空格）
+
+\renewcommand{\qedsymbol}{$\blacksquare$}   % 证明结尾的 QED 符号改为黑方块 ■（amsthm 的 proof 环境用）
+
+\newtcbtheorem[]{reidai}{例題}               % 定义 tcolorbox 风格的 “例題” 定理环境：\begin{reidai}{标题}{副标题}
+{fonttitle=\gtfamily\sffamily\bfseries\upshape\large, % 标题字体：日文ゴシック+无衬线+粗体
+ colframe=black,colback=black!15!white,     % 边框黑色，背景浅灰
+ rightrule=1pt,leftrule=1pt,bottomrule=2pt, % 右/左/下边框线条粗细
+ colbacktitle=black,theorem style=standard,breakable,arc=10pt} % 标题背景黑，正文可分页，圆角
+{tha}                                       % 该定理环境的内部 name（用于交叉引用）
+
+\renewcommand{\thefootnote}{\arabic{footnote}} % 脚注编号用阿拉伯数字
+
+\newtheoremstyle{mystyle}%                  % 定义新的定理样式 mystyle
+  {}%                      % 上部スペース （定理环境前的空白）
+  {}%                      % 下部スペース （定理环境后的空白）
+  {}%                      % 本文フォント （正文字体，默认）
+  {}%                      % 1行目のインデント量 （标题行缩进）
+  {\bfseries}%             % 見出しフォント （标题字体为粗体）
+  :%                       % 見出し後の句読点 （标题后面的标点，这里是冒号）
+  { }%                     % 見出し後のスペース （标题后与正文之间的空格）
+  {\thmname{#1}\thmnumber{ #2}\thmnote{ (#3)}} % 标题格式：Thm 1 (备注)
+
+\theoremstyle{mystyle}                       % 使用刚才定义的 mystyle 作为当前定理样式
+
+\newtheorem{dfn}{\texttt{Def.}}[section]    % “定义”环境 dfn，标题显示为 “Def.”，按 section 编号
+\newtheorem{exm}[dfn]{\texttt{Ex.}}         % “例子”环境 exm，与 dfn 共用同一个编号
+\newtheorem{prop}[dfn]{\texttt{Prop.}}      % 命题环境 prop
+\newtheorem{lem}[dfn]{\texttt{Lem.}}        % 引理环境 lem
+\newtheorem{thm}[dfn]{\texttt{Thm.}}        % 定理环境 thm
+\newtheorem{cor}[dfn]{\texttt{Cor.}}        % 推论环境 cor
+\newtheorem{rem}[dfn]{\texttt{Rem.}}        % 备注环境 rem
+\newtheorem{fact}[dfn]{\texttt{Fact}}       % 事实环境 fact
+
+\renewcommand{\qedsymbol}{$\blacksquare$}   % 再次确认 QED 符号为黑方块（如果前面被别的包改掉）
+
+\usepackage{lipsum} % 用于生成示例文本
+\usepackage{float} % 强制浮动
+
+% 排版相关的自定义命令：印 “解答 / 証明 / 補足 / 注意” 标签的小盒子
+
+\newcommand{\kai}% 解答框标题：“解答”
+{\noindent
+\begin{tikzpicture}[scale=0.2, baseline=2.8pt]
+\draw (3.3,1.2) node{\large\textgt{解 答}}; % 文字“解答”
+\draw[thick, rounded corners=3pt,] (0,0)--(6.5,0)--(6.5,2.4)--(0,2.4)--cycle; % 带圆角的矩形外框
+\end{tikzpicture}\quad}
+
+\newcommand{\shomei}% 証明框标题：“証明”
+{\noindent
+\begin{tikzpicture}[scale=0.2, baseline=2.8pt]
+\draw (3.3,1.2) node{\textgt{証 明}}; % 文字“証明”
+\draw[double,thick,rounded corners=3pt,] (0,0)--(6.5,0)--(6.5,2.4)--(0,2.4)--cycle; % 双线矩形外框
+\end{tikzpicture}\quad}
+
+\newcommand{\hosoku}{\noindent
+\begin{tikzpicture}[scale=0.2, baseline=2.8pt]
+\draw (6,1) node{\large\textgt{補足}}; % 文字“補足”
+\fill (0,1)--(1,0)--(2,1)--(1,2)--cycle;
+\fill[gray] (1,1)--(2,0)--(3,1)--(2,2)--cycle;
+\fill (2,1)--(3,0)--(4,1)--(3,2)--cycle;
+\fill (10,1)--(11,0)--(12,1)--(11,2)--cycle;
+\fill[gray] (9,1)--(10,0)--(11,1)--(10,2)--cycle;
+\fill (8,1)--(9,0)--(10,1)--(9,2)--cycle;
+\end{tikzpicture}\quad}
+
+\newcommand{\chui}{\noindent
+\begin{tikzpicture}[scale=0.2, baseline=2.8pt]
+\fill (0,0)--(6.5,0)--(6.5,2.2)--(0,2.2); % 填满背景色（默认黑）
+\draw (3.3,1) node[white]{\large\textgt{注意！}}; % 中间白字“注意！”
+\draw[thick] (0,0)--(6.5,0)--(6.5,2.2)--(0,2.2)--cycle; % 外框
+\end{tikzpicture}\quad}
+
+\title{\vspace{-3cm} \textbf{Lecture} \texttt{1}}
+\author{\texttt{YI Ran} - $\mathnormal{61112600301}$\\ \texttt{andreyi@outlook.jp}}
+\date{\today}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%　本　文　%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\maketitle                                   % 输出标题页
+\thispagestyle{plain}                        % 这一页使用 plain 样式
+
+\section*{\textbf{\large 課題 1-1}\quad \normalfont\large}
+ガウスの消去法に基づき、各ステップ $k$ においてピボット（Pivot）の行番号を
+$$\sigma_k = \min\{i \mid a^{(k-1)}_{ik} \neq 0, \ i \notin \{\sigma_1, \dots, \sigma_{k-1}\} \}$$
+と定義し、消去行列 $L_k$ を左からかけることで、第 $k$ 列の $\sigma_k$ 行目より下の成分をすべて $0$ にする操作を $n$ 回繰り返した結果得られる行列を $A^{(n)}$ とする。
+ここで、$L_k = I_n - \displaystyle\sum_{j>\sigma_k}^n \frac{a_{jk}}{a_{\sigma_k k}} \mathrm{E}_{i\sigma_k}$\\
+
+\noindent
+\texttt{(1)}\ \textbf{4 - (a)}では、第1列～第j列 ($1 \le j \le n$) において、0でない成分をもつ行の数は j 個であることを示せ。\\
+\texttt{(2)}\ \textbf{4 - (b)}では、第i行を左からたどっていって、0でない最初の成分を $a_{ir}^{(n)}$ とすると、その下の成分は全て0。\ie\  $a_{kr}^{(n)} = 0, k > i$であることを示せ。\\
+\texttt{(3)}\ \textbf{5}では、$A^{(n)}$の第$\sigma_i$行を第i行に移す置換行列を$\sigma$と書く。このとき $A^\prime = \sigma A^{(n)}$ は、上三角行列になり、連立方程式は $\mathbf{b}^\prime = \sigma L_n \cdots L_1 \mathbf{b}$ として、$A^\prime x = \mathbf{b}^\prime$となり、解けるということを示せ。(連立方程式の解法 = 行列の上三角化)\\
+
+\kai\ \\
+
+\noindent
+\textbf{(1) の証明：}
+
+\begin{proof}\ \\
+\noindent
+行列 $A^{(n)}$ の第 $1$ 列から第 $j$ 列 ($1 \le j \le n$) までを考える。
+第 $k$ ステップ ($1 \le k \le j$) において、ピボット $\sigma_k$ を選ぶ際、すでに選ばれたピボット行 $\sigma_1, \dots, \sigma_{k-1}$ 以外の行から、上から順に最初の非零成分を探す。
+この定義により、まだピボットに選ばれていない行のうち、$\sigma_k$ より上にある行の第 $k$ 列成分は元々 $0$ であり、また消去操作（$L_k$ の左乗）によって $\sigma_k$ より下にある行の第 $k$ 列成分もすべて $0$ にされる。\\
+
+\noindent
+したがって、第 $k$ 列において非零となり得る成分は、そのステップまでに選ばれたピボット行 $\{\sigma_1, \sigma_2, \dots, \sigma_k\}$ にのみ存在する。
+これを $k=1$ から $j$ まで繰り返すと、第 $1$ 列から第 $j$ 列までにおいて非零成分を持ち得る行は、$\{\sigma_1, \sigma_2, \dots, \sigma_j\}$ の $j$ 個の行のみである。
+\end{proof}
+\vspace{1em}
+\noindent
+\textbf{(2) の証明：}
+
+\begin{proof}\ \\
+\noindent
+行列 $A^{(n)}$ の第 $i$ 行における最初の非零成分を $a^{(n)}_{ir}$ とする。
+目的は、$\forall k > i \implies a^{(n)}_{kr} = 0$ を示すことである。\\
+
+\noindent
+第 $i$ 行の最初の非零成分が第 $r$ 列に存在するということは、第 $r$ ステップにおいて、第 $i$ 行が初めてピボットとして選ばれたことである。すなわち、$ \sigma_r = i $
+である。消去行列 $L_r$ の構成定義により、第 $r$ 列においてピボット行 $\sigma_r$ より下の成分はすべて $0$ となるようされる。すなわち、
+$$ a^{(r)}_{kr} = 0 \quad (\forall k > \sigma_r = i) $$
+が成立する。\\
+
+\noindent
+さらに、以降のステップ $p \ (p > r)$ における消去操作は、第 $r$ 列のすでに $0$ となった要素に影響を及ぼさない。
+ゆえに、最終的な行列 $A^{(n)}$ においても $a^{(n)}_{kr} = 0 \ (\forall k > i)$ が保たれる。
+
+\end{proof}
+\vspace{1em}
+\noindent
+\textbf{(3) の証明：}
+
+\begin{proof}\ \\
+\noindent
+$A'$ を、$A^{(n)}$ の第 $\sigma_k$ 行を第 $k$ 行に移す置換行列 $\sigma$ を左からかけた行列とする（すなわち $A' = \sigma A^{(n)}$）。
+$A'$ の $(k, j)$ 成分を $a'_{kj}$ とすると、置換の定義から $a'_{kj} = a^{(n)}_{\sigma_k, j}$ である。
+$A'$ が上三角行列であることを示すには、$k > j$ となる任意の $(k, j)$ について $a'_{kj} = 0$ であることを示せばよい。\\
+
+\noindent
+上の(2)の結果より、$A^{(n)}$ の第 $j$ 列において非零成分を持ち得る行の集合は $\{\sigma_1, \dots, \sigma_j\}$ のみである。
+ここで $k > j$ であるから、行 $\sigma_k$ はこの集合 $\{\sigma_1, \dots, \sigma_j\}$ には含まれない（各ステップで選ばれるピボットはすべて異なる行であるため）。\\
+
+\noindent
+ゆえに、$A^{(n)}$ の第 $j$ 列において、第 $\sigma_k$ 行の成分は必ず $0$ でなければならない。すなわち $a^{(n)}_{\sigma_k, j} = 0$ である。
+したがって、$k > j$ のとき常に $a'_{kj} = 0$ となり、$A'$ は上三角行列となる。
+\end{proof}
+\vspace{2em}
+
+\section*{\textbf{\large 課題 1-2}\quad \normalfont\large}
+\noindent
+$\mathscr{P}_{n}\coloneqq \left\{p| n次置換行列\right\}$、$\Omega_n\coloneqq \left\{1,2,3,\cdots,n\right\}$とし、$\Omega_n$から$\Omega_n$への全単射の集合を$S_n$と書く($S_n \coloneqq \left\{\sigma: \Omega_n\to \Omega_n|\sigma: 全単射\right\}$),\ie \ $S_n$はn次対称群である。
+任意の置換 $\pi \in S_n$ に対して、対応する置換行列 $M_\pi \in \mathscr{P}_n$ を次のように定義する。
+$$(M_\pi)_{i,j} = \delta_{i, \pi(j)}$$
+（ここで、$\delta$ はクロネッカーのデルタである。）
+
+写像 $f: \mathscr{P}_n \to S_n$ を $f(M_\pi) = \pi$ と定義するとき、これが群の同型写像であることを示す。\\
+\newpage
+\kai\ \\
+\begin{proof}\ \\
+\vspace{1em}
+\noindent
+\textbf{1. 準同型（Homomorphism）であることの証明：}\\
+
+\noindent
+任意の置換行列 $M_\pi, M_\tau \in \mathscr{P}_n$ をとる。行列の積 $M_\pi M_\tau$ の $(i, j)$ 成分を定義に従い計算する。
+\begin{align*}
+(M_\pi M_\tau)_{i,j} &= \sum_{k=1}^n (M_\pi)_{i,k} (M_\tau)_{k,j} \\
+&= \sum_{k=1}^n \delta_{i, \pi(k)} \delta_{k, \tau(j)}
+\end{align*}
+この和において、$\delta_{k, \tau(j)}$ は $k = \tau(j)$ のときのみ $1$ となり、その他の $k$ ではすべて $0$ となる。
+したがって、和の中で $k = \tau(j)$ の項のみが残り、
+$$(M_\pi M_\tau)_{i,j} = \delta_{i, \pi(\tau(j))} = \delta_{i, (\pi \circ \tau)(j)} = (M_{\pi \circ \tau})_{i,j}$$
+となる。すなわち、$M_\pi M_\tau = M_{\pi \circ \tau}$ が成り立つ。
+
+\noindent
+したがって、
+$$f(M_\pi M_\tau) = f(M_{\pi \circ \tau}) = \pi \circ \tau = f(M_\pi) \circ f(M_\tau)$$
+となり、よって写像$f$は準同型写像である。
+
+\vspace{1em}
+\noindent\textbf{2. 全単射（Bijection）であることの証明：}
+
+
+\noindent
+\textbf{(i) 単射性 (Injectivity)：}\\
+$f(M_\pi) = f(M_\tau)$ と仮定すると、写像の定義より $\pi = \tau$ となる。
+2つの置換が等しいということは、任意の $j$ において $\pi(j) = \tau(j)$ である。
+したがって、各成分において $(M_\pi)_{i,j} = \delta_{i, \pi(j)} = \delta_{i, \tau(j)} = (M_\tau)_{i,j}$ となり、$M_\pi = M_\tau$ を得る。よって単射である。
+
+\vspace{0.5em}
+\noindent\textbf{(ii) 全射性 (Surjectivity)：}\\
+任意の置換 $\sigma \in S_n$ に対し、行列 $A$ を $A_{i,j} = \delta_{i, \sigma(j)}$ と構成する。
+$\sigma$ は全単射であるため、各列 $j$ について $A_{i,j}=1$ となる $i$ はただ一つ存在し、各行 $i$ についても $\sigma(j)=i$ となる $j$ がただ一つ存在する。
+これは $A$ が置換行列の定義を満たし、$A \in \mathscr{P}_n$ である。
+また、このとき定義より $f(A) = \sigma$ となるため、任意の $\sigma \in S_n$ に対して原像が存在する。よって全射である。\\
+
+\noindent
+したがって、$f$ は全単射である。\\
+以上より、写像 $f: \mathscr{P}_n \to S_n$ は全単射かつ群準同型であるため、群の同型写像（Isomorphism）である。
+\end{proof}
+
+
+
+
+\end{document}
