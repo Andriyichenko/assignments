@@ -1,0 +1,473 @@
+\documentclass[dvipdfmx,a4paper]{jsarticle}
+\usepackage{amsmath,amssymb,amsfonts,amsthm}
+\usepackage[dvipdfmx]{graphicx}
+\usepackage{tikz}
+\usetikzlibrary{positioning, intersections, calc, arrows.meta, math, through, shadows,automata}
+\usepackage{caption}
+\usepackage{tcolorbox}
+\tcbuselibrary{theorems,breakable}
+\usepackage{enumerate}
+\usepackage{mathtools}
+\usepackage{otf}
+\usepackage{xspace}
+\usepackage{newpxtext}
+\usepackage[utf8]{inputenc}
+\usepackage{CJKutf8,CJKspace,CJKpunct}
+\usepackage{pgfplots}
+\usepackage{lastpage}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\textsc{特殊講義（専門01)}}
+\fancyhead[R]{\texttt{YI Ran} - $\mathnormal{61112600301}$}
+\fancyfoot[C]{\thepage\quad \textit{of}\quad\pageref*{LastPage}}
+
+\fancypagestyle{plain}{
+  \fancyhf{}
+  \renewcommand{\headrulewidth}{0pt}
+  \fancyfoot[C]{\thepage\quad \textit{of}\quad\pageref*{LastPage}}
+}
+
+\pgfplotsset{compat=1.18}
+\usepackage{okumacro}
+
+\renewcommand{\abstractname}{注意事項}
+
+\newtagform{textbf}[\textbf]{[}{]}
+\usetagform{textbf}
+
+\newcommand*{\ie}{\textbf{\textit{i.e.}}\@\xspace}
+
+\renewcommand{\qedsymbol}{$\blacksquare$}
+
+\newtcbtheorem[]{reidai}{例題}
+{fonttitle=\gtfamily\sffamily\bfseries\upshape\large,
+ colframe=black,colback=black!15!white,
+ rightrule=1pt,leftrule=1pt,bottomrule=2pt,
+ colbacktitle=black,theorem style=standard,breakable,arc=10pt}
+{tha}
+
+\renewcommand{\thefootnote}{\arabic{footnote}}
+
+\newtheoremstyle{mystyle}%
+  {}{}{}{}{\bfseries}:{ }
+  {\thmname{#1}\thmnumber{ #2}\thmnote{ (#3)}}
+
+\theoremstyle{mystyle}
+
+\newtheorem{dfn}{\texttt{Def.}}[section]
+\newtheorem{exm}[dfn]{\texttt{Ex.}}
+\newtheorem{prop}[dfn]{\texttt{Prop.}}
+\newtheorem{lem}[dfn]{\texttt{Lem.}}
+\newtheorem{thm}[dfn]{\texttt{Thm.}}
+\newtheorem{cor}[dfn]{\texttt{Cor.}}
+\newtheorem{rem}[dfn]{\texttt{Rem.}}
+\newtheorem{fact}[dfn]{\texttt{Fact}}
+
+\renewcommand{\qedsymbol}{$\blacksquare$}
+
+\usepackage{lipsum}
+\usepackage{float}
+
+\newcommand{\kai}
+{\noindent
+\begin{tikzpicture}[scale=0.2, baseline=2.8pt]
+\draw (3.3,1.2) node{\large\textgt{解 答}};
+\draw[thick, rounded corners=3pt,] (0,0)--(6.5,0)--(6.5,2.4)--(0,2.4)--cycle;
+\end{tikzpicture}}
+
+\newcommand{\shomei}
+{\noindent
+\begin{tikzpicture}[scale=0.2, baseline=2.8pt]
+\draw (3.3,1.2) node{\textgt{証 明}};
+\draw[double,thick,rounded corners=3pt,] (0,0)--(6.5,0)--(6.5,2.4)--(0,2.4)--cycle;
+\end{tikzpicture};}
+
+\newcommand{\hosoku}{\noindent
+\begin{tikzpicture}[scale=0.2, baseline=2.8pt]
+\draw (6,1) node{\large\textgt{補足}};
+\fill (0,1)--(1,0)--(2,1)--(1,2)--cycle;
+\fill[gray] (1,1)--(2,0)--(3,1)--(2,2)--cycle;
+\fill (2,1)--(3,0)--(4,1)--(3,2)--cycle;
+\fill (10,1)--(11,0)--(12,1)--(11,2)--cycle;
+\fill[gray] (9,1)--(10,0)--(11,1)--(10,2)--cycle;
+\fill (8,1)--(9,0)--(10,1)--(9,2)--cycle;
+\end{tikzpicture};}
+
+\newcommand{\chui}{\noindent
+\begin{tikzpicture}[scale=0.2, baseline=2.8pt]
+\fill (0,0)--(6.5,0)--(6.5,2.2)--(0,2.2);
+\draw (3.3,1) node[white]{\large\textgt{注意！}};
+\draw[thick] (0,0)--(6.5,0)--(6.5,2.2)--(0,2.2)--cycle;
+\end{tikzpicture};}
+
+\title{\vspace{-3cm} \textbf{\texttt{REPORT 1(SPECIAL LECTURES)}}}
+\author{\texttt{YI Ran} - $\mathnormal{61112600301}$\\ \texttt{andreyi@outlook.jp}}
+\date{\today}
+
+\begin{document}
+\maketitle
+\thispagestyle{plain}
+
+%============================================================
+%\section*{\textbf{\large Problem 1}\quad\normalfont\large}
+%============================================================
+
+% \begin{abstract}
+% 本解答では，内積 $(\,\cdot\,|\,\cdot\,)$ は第2変数について線形，
+% 第1変数について共役線形とする規約を採用する．
+% また $H$ は $\dim H = n$ の有限次元複素 Hilbert 空間，
+% $B(H)$ は $H$ 上の有界線形作用素全体を表す．
+% 有限次元では任意の線形作用素が自動的に有界であるから，
+% $B(H)$ は $H$ 上のすべての線形変換の集合と見なしてよい．
+% \end{abstract}
+
+%\vspace{0.5em}
+
+%------------------------------------------------------------
+\section*{\boxed{\textbf{\large 問1}}}
+%------------------------------------------------------------
+
+\textrm{Let $H$ be a Hilbert space with $\dim H = n$ and $M_n(\mathbb{C})$ be the vector space
+of $n \times n$ matrices over $\mathbb{C}$.
+$\mathrm{Tr}$ means the canonical trace on a matrix.
+That is, for any $X = [x_{ij}] \in M_n(\mathbb{C})$,
+$\mathrm{Tr}(X) = \sum_{i=1}^{n} x_{ii}$.}
+
+\begin{enumerate}[(1)]
+  \item \textrm{Let $\{e_i\}_{i=1}^{n}$ be an orthogonal basic system.
+  That is, for any $x \in H$, $\exists\, \{x_i\}_{i=1}^{n} \subset \mathbb{C}$ such that
+  $x = \sum_{i=1}^{n} x_i e_i$.
+  Then show that the following map $\pi : B(H) \to M_n(\mathbb{C})$ is a linear isomorphism:
+  \[
+    \pi(T) = \bigl[(e_i \mid T e_j)\bigr]_{i,j=1}^{n}.
+  \]}
+
+  \item \textrm{Using the above map $\pi$ we define
+  $\mathrm{Tr}(T) = \mathrm{Tr}(\pi(T)) = \sum_{i=1}^{n}(e_i \mid Te_i)$.
+  Let $\{f_i\}_{i=1}^{n}$ be another orthogonal basic system for $H$.
+  Show that $\mathrm{Tr}(T) = \sum_{i=1}^{n}(f_i \mid Tf_i)$.}
+\end{enumerate}
+
+\vspace{1em}
+
+%------------------------------------------------------------
+\section*{\boxed{\textbf{\large 解答}}}
+%------------------------------------------------------------
+\subsection*{\textbf{(1)}}
+\begin{proof}
+\ \\
+\paragraph{\textbf{$\pi$の線形性}を示す}\ \\
+\noindent
+任意の $S, T \in B(H)$ と $\alpha, \beta \in \mathbb{C}$ をとる。$\pi$ の定義より、
+$$
+  \pi(\alpha S + \beta T) = \bigl[(e_i \mid (\alpha S + \beta T)e_j)\bigr]_{i,j=1}^{n}
+$$
+となる。ここで、各$i, j$ に対して，$\pi(\alpha S + \beta T)_{ij} = (e_i \mid (\alpha S + \beta T)e_j)$である。\\
+\noindent
+内積の線形性を用いると、
+\[
+    (e_i \mid (\alpha S + \beta T)e_j)
+  = (e_i \mid \alpha S e_j + \beta T e_j)
+  = \alpha (e_i \mid S e_j) + \beta (e_i \mid T e_j)
+  = \bigl(\alpha \pi(S) + \beta \pi(T)\bigr)_{ij}
+\]
+これはすべての $i, j$ について成り立つので、
+$\pi(\alpha S + \beta T) = \alpha \pi(S) + \beta \pi(T)$となり、$\pi$ は線形である。
+
+\vspace{0.8em}
+\noindent
+\paragraph{\textbf{$\pi$ の単射性}を示す}\ \\
+\noindent
+$\forall S, T \in B(H)$を取り、$\pi(S)=\pi(T)$ と仮定する。このとき、
+\[
+  \pi(S-T)=\pi(S)-\pi(T)=0
+\]
+となる。\\
+\noindent
+したがって，すべての $i,j$ に対して、
+\[
+  (e_i\mid (S-T)e_j)=0
+\]
+が成り立つ。各 $j$ を固定し、$v = (S-T)e_j$ とする。$\forall i$に対して、
+\[
+  (e_i\mid (S-T)e_j) = (e_i\mid v) = 0
+\]
+を得る。$\{e_1,\dots,e_n\}$は正規直交基底であるから、
+
+\[
+  v=\sum_{j=1}^n x_j e_j
+\]
+ここで、
+$$ 
+  (e_i\mid v) = (e_i\mid \sum_{j=1}^n x_j e_j) = \sum_{j=1}^n x_j (e_i\mid e_j) =\sum_{j=1}^n x_j \delta_{ij} = x_i\qquad (\delta_{ij}=\begin{cases}1 & i=j,\\0 & i\ne j\end{cases})
+$$
+よって、
+$$ 
+  v = \sum_{j=1}^n x_j e_j = \sum_{j=1}^n (e_j\mid v) e_j = 0
+$$
+となる。次、$v = (S-T)e_j$を$ v=\sum_{j=1}^n (e_j\mid v) e_j$に代入すると、\\
+$$
+  (S-T)e_j = \sum_{j=1}^n (e_j\mid (S-T)e_j) e_j = 0
+$$
+となる。$(e_i\mid (S-T)e_j) = 0\quad \textrm{for }\ \forall i,j$より、
+$$ 
+  (S-T)e_j = \sum_{k=1}^n 0 \cdot e_j = 0
+$$
+となる。for $\forall x \in H$に対して、$x = \sum_{j=1}^n x_j e_j$と表せるから、
+\[
+  (S-T)x=\sum_{j=1}^n x_j (S-T)e_j= \sum_{j=1}^n x_j\cdot 0 =0
+\]
+したがって $S-T=0$、\ie $S=T$ である。ゆえに $\pi$ は単射である。
+
+\vspace{0.8em}
+\noindent
+\paragraph{\textbf{$\pi$の全射性}を示す}\ \\
+\noindent
+任意の行列 $A = [a_{ij}] \in M_n(\mathbb{C})$ をとり、各基底ベクトル $e_j$ に対して、
+\[
+  T_A e_j := \sum_{i=1}^{n} a_{ij} e_i \qquad (j = 1, \ldots, n)
+\]
+とする。さらに、任意の $x=\sum_{j=1}^n x_je_j\in H$ に対して
+\[
+  T_Ax:=\sum_{j=1}^n x_j T_Ae_j
+\]
+とする。この定義より，任意の $e,h\in H$ および $\alpha,\beta\in\mathbb{C}$ に対して
+\[
+  T_A(\alpha e+\beta h)=\alpha T_Ae+\beta T_Ah
+\]
+が成り立つので，$T_A:H\to H$ は線形作用素である。
+また，$\dim H=n$ であるから、$H$ は有限次元であり、
+有限次元空間上の線形作用素は有界であるので $T_A\in B(H)$ である。次に、各 $k, j$ に対して、
+\[
+  \pi(T_A)_{kj}
+  =(e_k \mid T_A e_j)
+  = \left(e_k \;\middle|\; \sum_{i=1}^{n} a_{ij} e_i\right)
+  = \sum_{i=1}^{n} a_{ij} (e_k \mid e_i)
+  = \sum_{i=1}^{n} a_{ij} \delta_{ki}
+  = a_{kj}
+\]
+したがって、すべての $k,j$ に対して $\pi(T_A)_{kj}=a_{kj}$ であるから、$\pi(T_A)=A$が成り立つ。よって $\pi$ は全射である。\\
+\noindent
+以上より、$\pi : B(H) \to M_n(\mathbb{C})$ は線形同型(Linear Isomorphism)である。
+\end{proof}
+
+\vspace{1.5em}
+
+%------------------------------------------------------------
+\subsection*{\textbf{(2)}}
+%------------------------------------------------------------
+
+\noindent
+$\{f_i\}_{i=1}^{n}$ を $H$ の別の正規直交基底とし、$T\in B(H)$とする。
+以下，$\mathrm{Tr}(T) = \sum_{i=1}^{n}(f_i \mid T f_i)$ を示す。\\
+
+\begin{proof}\ \\
+\noindent
+$\{e_k\}_{k=1}^n$ は $H$ の正規直交基底であるから，各 $f_i$ は
+\[
+  f_i=\sum_{k=1}^n u_{ki}e_k\ ,
+  \quad
+  u_{ki}=(e_k\mid f_i)
+\]
+と表される。
+ここで係数行列$U=(u_{ki})_{k,i=1}^n$を考える。\\
+\noindent
+$\{e_k\}_{k=1}^n$ と $\{f_i\}_{i=1}^n$ はいずれも正規直交基底であるから、
+$U$ はユニタリ行列であり、
+\[
+  U^*U=I
+\]
+が成り立つ。
+したがって、その $(k,l)$ 成分を比較すると
+\[
+  \sum_{i=1}^n \overline{u_{ki}}\,u_{li}=\delta_{kl}
+  \qquad
+  (k,l=1,\dots,n)
+\]
+を得る。
+
+\medskip
+\noindent
+今示したいのは
+\[
+  \mathrm{Tr}(T)=\sum_{i=1}^n (f_i\mid Tf_i)
+\]
+である。
+そこで右辺の和を計算すると、
+\[
+  \sum_{i=1}^n (f_i\mid Tf_i)
+  =
+  \sum_{i=1}^n
+  \left(
+    \sum_{k=1}^n u_{ki}e_k
+    \;\middle|\;
+    T\sum_{l=1}^n u_{li}e_l
+  \right)
+\]
+となる。$T$ の線形性より
+\[
+  T\left(\sum_{l=1}^n u_{li}e_l\right)
+  =
+  \sum_{l=1}^n u_{li}Te_l
+\]
+であるから、
+\[
+  \sum_{i=1}^n (f_i\mid Tf_i)
+  =
+  \sum_{i=1}^n
+  \left(
+    \sum_{k=1}^n u_{ki}e_k
+    \;\middle|\;
+    \sum_{l=1}^n u_{li}Te_l
+  \right).
+\]
+さらに、
+\[
+  \sum_{i=1}^n (f_i\mid Tf_i)
+  =
+  \sum_{i=1}^n \sum_{k=1}^n \sum_{l=1}^n
+  \overline{u_{ki}}\,u_{li}\,(e_k\mid Te_l)
+  =
+  \sum_{k=1}^n \sum_{l=1}^n\bigl(\sum_{i=1}^n 
+  \overline{u_{ki}}\,u_{li}\bigr)(e_k\mid Te_l)
+\]
+
+\medskip
+$\sum_{i=1}^n \overline{u_{ki}}\,u_{li}=\delta_{kl}$を上式に代入すると
+\[
+  \sum_{i=1}^n (f_i\mid Tf_i)
+  =
+  \sum_{k=1}^n \sum_{l=1}^n \delta_{kl}(e_k\mid Te_l).
+\]
+となる。$\delta_{kl}$ は $k=l$ のときに $1$，$k\neq l$ のときに $0$ であるから、
+右辺では $k=l$ の項だけが残り、
+\[
+  \sum_{i=1}^n (f_i\mid Tf_i)
+  =
+  \sum_{k=1}^n (e_k\mid Te_k).
+\]
+最後に，$\mathrm{Tr}(T)$ の定義より
+\[
+  \sum_{i=1}^n (f_i\mid Tf_i) = \sum_{k=1}^n (e_k\mid Te_k)=\mathrm{Tr}(\pi(T)) = \mathrm{Tr}(T)
+\]
+である。したがって、
+\[
+  \mathrm{Tr}(T)=\sum_{i=1}^n (f_i\mid Tf_i)
+\]
+が示された。
+\end{proof}
+\newpage
+%------------------------------------------------------------
+\section*{\boxed{\textbf{\large 問2}}}
+%------------------------------------------------------------
+\noindent
+\textrm{Let $x_1, x_2, x_3 \in \mathbb{R}$ and let
+\[
+  A = \frac{1}{2}
+  \begin{pmatrix}
+    1 + x_3 & x_1 - ix_2 \\
+    x_1 + ix_2 & 1 - x_3
+  \end{pmatrix}.
+\]
+Show that $A$ is a density matrix (that is, $A \geq 0$ and $\mathrm{Tr}(A) = 1$)
+if and only if $x_1^2 + x_2^2 + x_3^2 \leq 1$.}
+
+
+%------------------------------------------------------------
+\section*{\boxed{\textbf{\large 解答}}}
+%------------------------------------------------------------
+
+
+\begin{proof}\ \\
+
+\paragraph{\textbf{$\mathrm{Tr}(A) = 1$ の確認}}\ \\
+\noindent
+トレースの定義より、
+\[
+  \mathrm{Tr}(A)
+  = \frac{1}{2}(1 + x_3) + \frac{1}{2}(1 - x_3)
+  = 1.
+\]
+よって $\mathrm{Tr}(A) = 1$ は $x_1, x_2, x_3$ の値によらず常に成り立つ。
+
+\vspace{0.8em}
+\noindent
+\paragraph{\textbf{$A$ がエルミート行列であることの確認}}\ \\
+\noindent
+$x_1, x_2, x_3 \in \mathbb{R}$ より、共役転置を計算すると、
+\[
+  A^* = \overline{A^T} =\frac{1}{2}
+  \begin{pmatrix}
+    \overline{1 + x_3} & \overline{x_1 + ix_2} \\
+    \overline{x_1 - ix_2} & \overline{1 - x_3}
+  \end{pmatrix}
+  = \frac{1}{2}
+  \begin{pmatrix}
+    1 + x_3 & x_1 - ix_2 \\
+    x_1 + ix_2 & 1 - x_3
+  \end{pmatrix}
+  = A
+\]
+したがって $A = A^*$ であり、$A$ はエルミート行列である。
+
+\vspace{0.8em}
+\noindent
+\paragraph{\textbf{Aの固有値の計算}}\ \\
+\noindent
+エルミート行列 $A$ が半正定値 ($A \geq 0$) であることは、
+$A$ のすべての固有値が非負であることと同値である。
+$A$ の特性多項式を計算する。
+\[
+  \det(\lambda I - A)
+  = \left(\lambda - \frac{1+x_3}{2}\right)\!\left(\lambda - \frac{1-x_3}{2}\right)
+    - \frac{x_1 - ix_2}{2} \cdot \frac{x_1 + ix_2}{2}.
+\]
+
+よって、
+$$ 
+  \det(\lambda I - A) = \lambda^2 - \lambda + \frac{1 - x_3^2}{4} - \frac{x_1^2 + x_2^2}{4} = \lambda^2 - \lambda + \frac{1 - (x_1^2 + x_2^2 + x_3^2)}{4}.
+$$
+$r = \sqrt{x_1^2 + x_2^2 + x_3^2} \geq 0$ とおくと、判別式は $1^2 - 4 \cdot 1 \cdot \dfrac{1-r^2}{4} = r^2 \geq 0$ となり、
+固有値は実数であって、
+\[
+  \lambda_{\pm} =\frac{-(-1) \pm \sqrt{r^2}}{2 \cdot 1} = \frac{1 \pm |r|}{2} = \frac{1 \pm r}{2}
+\]
+となる。
+
+\vspace{0.8em}
+\noindent
+\paragraph{$(\Rightarrow)$ \textbf{$A$ が密度行列} $\Rightarrow$ $x_1^2 + x_2^2 + x_3^2 \leq 1$:}\ \\
+\noindent
+$A$ が密度行列であると仮定する。すなわち $A \geq 0$ かつ $\mathrm{Tr}(A) = 1$ とする。
+$A \geq 0$ より、すべての固有値は非負であるから、
+\[
+  \lambda_- = \frac{1 - r}{2} \geq 0\ , \quad \lambda_+ = \frac{1 + r}{2} \geq 0 
+\]
+これを解くと $0 \leq r \leq 1$、\ie $0 \leq r^2 \leq 1$であり、よって
+\[
+  x_1^2 + x_2^2 + x_3^2 \leq 1
+\]
+が従う。
+\vspace{0.8em}
+\noindent
+\paragraph{$(\Leftarrow)$ $x_1^2 + x_2^2 + x_3^2 \leq 1$ $\Rightarrow$ \textbf{$A$ が密度行列}:}\ \\
+\noindent
+$x_1^2 + x_2^2 + x_3^2 \leq 1$、すなわち $0 \leq r=\sqrt{x_1^2 + x_2^2 + x_3^2} \leq 1$ と仮定する。
+このとき、$0\leq r \leq 1$より、
+$$
+\lambda_+ = \dfrac{1 + r}{2} \geq 0\ ,\ \lambda_- = \dfrac{1 - r}{2} \geq 0
+$$
+が成り立つ。
+よって、すべての固有値が非負であるから、 $A \geq 0$ が成り立つ。\\
+\noindent
+また、上で示したように $\mathrm{Tr}(A) = 1$ は常に成立する。
+したがって $A$ は密度行列である。
+
+\vspace{0.8em}
+\noindent
+以上 $(\Rightarrow)$ および $(\Leftarrow)$ より、$A$ が密度行列であること ($A \geq 0$ かつ $\mathrm{Tr}(A) = 1$) は
+$x_1^2 + x_2^2 + x_3^2 \leq 1$ と同値である。\ie $A$が密度行列$\xLeftrightarrow{\text{iff}} x_1^2 + x_2^2 + x_3^2 \leq 1 $。
+\end{proof}
+
+\end{document}

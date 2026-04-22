@@ -1,0 +1,1009 @@
+\documentclass[11pt,a4paper]{jsarticle}
+
+% ============================================================
+% パッケージ
+% ============================================================
+\usepackage[dvipdfmx]{graphicx}
+\usepackage[dvipdfmx]{xcolor}
+\usepackage{geometry}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{setspace}
+\usepackage{parskip}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage[most]{tcolorbox}
+
+% ============================================================
+% ページ設定
+% ============================================================
+\geometry{
+  a4paper,
+  top=2.8cm,
+  bottom=2.5cm,
+  left=2.5cm,
+  right=2.5cm
+}
+
+% ============================================================
+% 色定義
+% ============================================================
+\definecolor{defblue}{RGB}{220,235,250}
+\definecolor{defborder}{RGB}{40,80,140}
+\definecolor{thmgreen}{RGB}{230,245,230}
+\definecolor{thmborder}{RGB}{30,100,50}
+\definecolor{propviolet}{RGB}{240,230,245}
+\definecolor{propborder}{RGB}{80,40,100}
+\definecolor{exgray}{RGB}{248,248,248}
+\definecolor{exborder}{RGB}{100,100,100}
+\definecolor{noteyellow}{RGB}{255,250,220}
+\definecolor{noteborder}{RGB}{180,140,40}
+\definecolor{darkblue}{RGB}{0,40,90}
+\definecolor{titleblue}{RGB}{15,50,100}
+\definecolor{darkgray}{gray}{0.25}
+
+% ============================================================
+% hyperref（最後に近い位置で読み込み）
+% ============================================================
+\usepackage[
+  dvipdfmx,
+  colorlinks=true,
+  linkcolor=darkblue,
+  citecolor=darkgray,
+  urlcolor=darkblue,
+  bookmarks=true,
+  bookmarksnumbered=true,
+  unicode=true
+]{hyperref}
+\usepackage{pxjahyper}
+
+% ============================================================
+% tcolorbox環境定義
+% ============================================================
+\newtcolorbox{definitionbox}[1][]{
+  colback=defblue,
+  colframe=defborder,
+  fonttitle=\bfseries,
+  title=#1,
+  breakable,
+  boxrule=0.8pt,
+  arc=2pt,
+  left=8pt,right=8pt,top=6pt,bottom=6pt
+}
+
+\newtcolorbox{theorembox}[1][]{
+  colback=thmgreen,
+  colframe=thmborder,
+  fonttitle=\bfseries,
+  title=#1,
+  breakable,
+  boxrule=0.8pt,
+  arc=2pt,
+  left=8pt,right=8pt,top=6pt,bottom=6pt
+}
+
+\newtcolorbox{propbox}[1][]{
+  colback=propviolet,
+  colframe=propborder,
+  fonttitle=\bfseries,
+  title=#1,
+  breakable,
+  boxrule=0.8pt,
+  arc=2pt,
+  left=8pt,right=8pt,top=6pt,bottom=6pt
+}
+
+\newtcolorbox{examplebox}[1][]{
+  colback=exgray,
+  colframe=exborder,
+  fonttitle=\bfseries,
+  title=#1,
+  breakable,
+  boxrule=0.6pt,
+  arc=2pt,
+  left=8pt,right=8pt,top=6pt,bottom=6pt
+}
+
+\newtcolorbox{notebox}[1][]{
+  colback=noteyellow,
+  colframe=noteborder,
+  fonttitle=\bfseries,
+  title=#1,
+  breakable,
+  boxrule=0.6pt,
+  arc=2pt,
+  left=8pt,right=8pt,top=6pt,bottom=6pt
+}
+
+\newtcolorbox{proofbox}{
+  colback=white,
+  colframe=gray!50,
+  boxrule=0.4pt,
+  arc=1pt,
+  left=8pt,right=8pt,top=6pt,bottom=6pt,
+  breakable
+}
+
+% ============================================================
+% 定理環境
+% ============================================================
+\theoremstyle{definition}
+\newtheorem{theorem}{定理}[section]
+\newtheorem{definition}{定義}[section]
+\newtheorem{proposition}{命題}[section]
+\newtheorem{lemma}{補題}[section]
+\newtheorem{corollary}{系}[section]
+\newtheorem{example}{例}[section]
+\newtheorem{remark}{注意}[section]
+
+% ============================================================
+% セクション見出し書式
+% ============================================================
+\titleformat{\section}
+  {\Large\bfseries\color{titleblue}}
+  {\thesection}{0.8em}{}
+
+\titleformat{\subsection}
+  {\large\bfseries\color{titleblue!80}}
+  {\thesubsection}{0.8em}{}
+
+\titleformat{\subsubsection}
+  {\normalsize\bfseries\color{titleblue!70}}
+  {\thesubsubsection}{0.6em}{}
+
+% ============================================================
+% ヘッダー・フッター
+% ============================================================
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\textsc{32181\ 数学基礎(F111)}}
+\fancyhead[R]{\textsc{Andre YI}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.5pt}
+\renewcommand{\footrulewidth}{0pt}
+\setlength{\headheight}{14pt}
+
+% ============================================================
+% 便利マクロ
+% ============================================================
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\eps}{\varepsilon}
+\newcommand{\tendsto}{\longrightarrow}
+
+\newcommand{\kaisetsu}[1]{\textcolor{darkblue!70!black}{\small（#1）}}
+\newcommand{\chui}[1]{\textcolor{noteborder}{\small【注：#1】}}
+
+% ============================================================
+% 行間
+% ============================================================
+\setstretch{1.35}
+
+% ============================================================
+% PDF情報
+% ============================================================
+\hypersetup{
+  pdftitle={数列の極限と上限の原理},
+  pdfauthor={\textsc{Andre YI}},
+  pdfsubject={数学基礎},
+  pdfkeywords={数列, 極限, 上限, 単調収束}
+}
+
+\begin{document}
+
+% ============================================================
+% 表紙
+% ============================================================
+\begin{titlepage}
+  \centering
+  \vspace*{2.5cm}
+
+  {\fontsize{32}{38}\selectfont\bfseries\color{titleblue} 数学基礎ノート\par}
+
+  \vspace{1.2cm}
+
+  {\LARGE\color{titleblue!85}
+    数列の極限・極限の四則演算\\[0.4cm]
+    上限の原理・単調収束定理\par
+  }
+
+  \vspace{2cm}
+
+  \begin{tcolorbox}[
+    colback=defblue,
+    colframe=defborder,
+    width=0.82\textwidth,
+    arc=3pt,
+    boxrule=0.5pt
+  ]
+    \centering\large
+    定義・定理・証明・例題を厳密に整理\\[0.3cm]
+  \end{tcolorbox}
+
+  \vfill
+
+  {\Large\textsc{Andre YI}\par}
+  \vspace{0.4cm}
+  {\large デジタル版: \url{https://www.andreyis.com}\par}
+  \vspace{0.8cm}
+  {\large \today\par}
+\end{titlepage}
+
+\tableofcontents
+\newpage
+
+% ============================================================
+% 記号一覧
+% ============================================================
+\section*{記号一覧}
+\addcontentsline{toc}{section}{記号一覧}
+
+\begin{center}
+\begin{tabular}{@{}lll@{}}
+\toprule
+\textbf{記号} & \textbf{読み方・意味} & \textbf{説明} \\
+\midrule
+$\N$ & 自然数全体の集合 & $\N = \{1,2,3,\ldots\}$ \\
+$\R$ & 実数全体の集合 & 一次元実数空間 \\
+$\eps$（イプシロン） & 任意の正の小さい数 & 極限の定義で使用 \\
+$\delta$（デルタ） & 近傍の幅を表す正の数 & 関数の極限で使用 \\
+$\forall$ & 「すべての…に対して」 & 全称記号 \\
+$\exists$ & 「…が存在する」 & 存在記号 \\
+$\implies$ & 「ならば」 & 含意 \\
+$\iff$ & 「必要十分」 & 同値 \\
+$\lfloor x \rfloor$ & 床関数（floor function） & $x$ を超えない最大の整数 \\
+$\sup S$ & 集合 $S$ の上限 & 最小上界（Least Upper Bound） \\
+$\max S$ & 集合 $S$ の最大元 & 最大値（最大元が存在する場合） \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\vspace{0.5cm}
+
+\begin{notebox}[記号 $\forall$ と $\exists$ について]
+$\forall$（全称記号）は「すべての」「任意の」という意味で、$\exists$（存在記号）は「存在する」「少なくとも一つある」という意味です。これらは極限の定義の核心をなす記号であり、正確に使い分けることが解析学の基礎となります。
+\end{notebox}
+
+\newpage
+
+% ============================================================
+% 第1章：数列極限の定義
+% ============================================================
+\section{数列の極限の定義}\label{sec:limit-def}
+
+本章では、数列の収束と発散について、厳密な定義を与えます。すべての定義は実数列・実数値の極限に限定して扱います。
+
+% -----------------------------------------------------------
+\subsection{有限値への収束}
+% -----------------------------------------------------------
+
+\begin{definitionbox}[定義：有限値への収束]
+\begin{definition}[数列の収束]\label{def:shuusoku}
+実数列 $\{a_n\}_{n=1}^{\infty}$ が実数 $L$ に\textbf{収束する}とは、任意の正数 $\eps > 0$ に対して、ある自然数 $N \in \N$ が存在して、すべての $n \geq N$ に対して
+\[
+|a_n - L| < \eps
+\]
+が成り立つことをいう。このとき、以下のように書き表す：
+\[
+\lim_{n \to \infty} a_n = L
+\quad \text{または} \quad
+a_n \tendsto L.
+\]
+\end{definition}
+\kaisetsu{「任意の $\eps > 0$」は「どんなに小さい正の数をとってもよい」という意味であり、これが極限の厳密さの核心です。$N$ は一般に $\eps$ の選び方に依存します。}
+\end{definitionbox}
+
+% -----------------------------------------------------------
+\subsection{無限大への発散}
+% -----------------------------------------------------------
+
+\begin{definitionbox}[定義：正の無限大への発散]
+\begin{definition}[$+\infty$ への発散]\label{def:plus-infty}
+数列 $\{a_n\}$ が正の無限大に発散するとは、任意の実数 $M$ に対して、ある自然数 $N \in \N$ が存在して、すべての $n \geq N$ に対して
+\[
+a_n > M
+\]
+が成り立つことをいい、$\displaystyle\lim_{n \to \infty} a_n = +\infty$ と書く。
+\end{definition}
+\end{definitionbox}
+
+\begin{definitionbox}[定義：負の無限大への発散]
+\begin{definition}[$-\infty$ への発散]\label{def:minus-infty}
+数列 $\{a_n\}$ が負の無限大に発散するとは、任意の実数 $M$ に対して、ある自然数 $N \in \N$ が存在して、すべての $n \geq N$ に対して
+\[
+a_n < M
+\]
+が成り立つことをいい、$\displaystyle\lim_{n \to \infty} a_n = -\infty$ と書く。
+\end{definition}
+\end{definitionbox}
+
+% -----------------------------------------------------------
+\subsection{振動による発散}
+% -----------------------------------------------------------
+
+数列は $\pm\infty$ にも有限値にも近づかず、振動する形で発散することがあります。これを\textbf{振動型発散}といいます。
+
+\begin{examplebox}{例：振動列 $a_n = (-1)^n$}
+\begin{example}\label{ex:shindou}
+$a_n = (-1)^n$ で定義される数列は発散するが、$+\infty$ へも $-\infty$ へも発散しない。
+
+\textbf{証明}\ \\
+\noindent
+背理法により示す。$\lim_{n \to \infty} a_n = L \in \R$ と仮定する。
+
+定義より、$\eps = 1$ に対してある $N \in \N$ が存在し、すべての $n \geq N$ に対して $|a_n - L| < 1$ となる。
+
+ここで、$n$ が奇数なら $a_n = -1$、$n$ が偶数なら $a_n = 1$ であるから：
+\begin{itemize}[itemsep=0.1em]
+\item $|-1 - L| = |L+1| < 1$ \kaisetsu{奇数項より}
+\item $|1 - L| < 1$ \kaisetsu{偶数項より}
+\end{itemize}
+
+第一式より $-2 < L < 0$、第二式より $0 < L < 2$ が得られるが、これらは同時に成り立たない。したがって仮定に矛盾し、$\{a_n\}$ は収束しない。
+
+また、すべての項は $-1$ または $1$ のいずれかであるから有界であり、$\pm\infty$ にも発散しない。 \qed
+\end{example}
+\kaisetsu{偶数部分列は $1$ に、奇数部分列は $-1$ に近づくため、全体としては極限が存在しません。}
+\end{examplebox}
+
+% -----------------------------------------------------------
+\subsection{無限大極限の基本例}
+% -----------------------------------------------------------
+
+\begin{examplebox}{例：$\lim n = +\infty$}
+\begin{example}\label{ex:n-infty}
+$\displaystyle\lim_{n \to \infty} n = +\infty$ を証明する。
+
+\textbf{証明}\ \\
+\noindent
+任意に $M > 0$ を与える。$N = \lfloor M \rfloor + 1$ とおくと、すべての $n \geq N$ に対して
+\[
+n \geq N = \lfloor M \rfloor + 1 > M
+\]
+となる。$M > 0$ は任意であったから、$\lim_{n \to \infty} n = +\infty$。 \qed
+\end{example}
+\kaisetsu{$\lfloor M \rfloor$ は $M$ を超えない最大の整数です。例えば $\lfloor 3.7 \rfloor = 3$、$\lfloor 5 \rfloor = 5$ です。}
+\end{examplebox}
+
+\begin{examplebox}{例：$\lim (5-n) = -\infty$}
+\begin{example}\label{ex:5-n}
+$\displaystyle\lim_{n \to \infty} (5 - n) = -\infty$ を証明する。
+
+\textbf{証明}\ \\
+\noindent
+任意に $M < 0$ を与える。不等式 $5 - n < M$ は $n > 5 - M$ と同値である。$M < 0$ より $5 - M > 5$ であるから、$N = \lfloor 5 - M \rfloor + 1$ とおけば、すべての $n \geq N$ に対して
+\[
+n \geq N > 5 - M \implies 5 - n < M
+\]
+となる。$M < 0$ は任意であったから、$\lim_{n \to \infty} (5 - n) = -\infty$。 \qed
+\end{example}
+\end{examplebox}
+
+\begin{examplebox}{例：$\lim (13n+1) = +\infty$}
+\begin{example}\label{ex:13n}
+$\displaystyle\lim_{n \to \infty} (13n + 1) = +\infty$ を証明する。
+
+\textbf{証明}\ \\
+\noindent
+任意に $M > 0$ を与える。$13n + 1 > M$ は $n > \frac{M-1}{13}$ と同値である。$N = \max\left\{1,\left\lfloor\frac{M-1}{13}\right\rfloor + 1\right\}$ とおくと、すべての $n \geq N$ に対して
+\[
+13n + 1 \geq 13N + 1 > 13 \cdot \frac{M-1}{13} + 1 = M
+\]
+となる。$M > 0$ は任意であったから、$\lim_{n \to \infty} (13n + 1) = +\infty$。 \qed
+\end{example}
+\end{examplebox}
+
+\begin{examplebox}{例：$a_n = (-1)^n n$ の発散}
+\begin{example}\label{ex:alt-n}
+$a_n = (-1)^n \cdot n$ は発散する。
+
+\textbf{証明}\ \\
+\noindent
+偶数部分列は $a_{2k} = 2k \to +\infty$（$k \to \infty$）、奇数部分列は $a_{2k-1} = -(2k-1) \to -\infty$（$k \to \infty$）である。二つの部分列が異なる振る舞いを示すから、数列 $\{a_n\}$ 全体としては極限を持たない。
+
+正の項が無限に存在するため $-\infty$ へも、負の項が無限に存在するため $+\infty$ へも発散しない。 \qed
+\end{example}
+\kaisetsu{部分列（subsequence）とは、元の数列から添字を選び出して作る新しい数列です。元の数列が収束すればすべての部分列も同じ極限に収束します。その対偶より、異なる極限を持つ部分列が存在すれば元の数列は発散します。}
+\end{examplebox}
+
+\newpage
+
+% ============================================================
+% 第2章：極限の四則演算
+% ============================================================
+\section{極限の四則演算}\label{sec:arithmetic}
+
+本章では、収束する数列に対して、加法・スカラー倍・乗法・除法が極限と交換することを厳密に証明します。これらは複雑な極限計算の基礎となります。
+
+% -----------------------------------------------------------
+\subsection{スカラー倍の法則}
+% -----------------------------------------------------------
+
+\begin{theorembox}[定理：スカラー倍の極限]
+\begin{theorem}[スカラー倍]\label{thm:scalar}
+$\lim_{n \to \infty} a_n = L$ かつ $c \in \R$ とするとき、
+\[
+\lim_{n \to \infty} (c \cdot a_n) = c \cdot L.
+\]
+\end{theorem}
+\end{theorembox}
+
+\begin{proofbox}
+\textbf{証明}\ \\
+\noindent
+
+$c = 0$ のとき、$c \cdot a_n = 0$ は定数列であるから、$\lim_{n \to \infty} (c \cdot a_n) = 0 = 0 \cdot L$。
+
+$c \neq 0$ のとき、以下のように示す。任意に $\eps > 0$ を与える。
+\[
+|c \cdot a_n - c \cdot L| = |c| \cdot |a_n - L|
+\]
+である。$\lim_{n \to \infty} a_n = L$ より、正数 $\frac{\eps}{|c|}$ に対してある $N \in \N$ が存在し、すべての $n \geq N$ に対して $|a_n - L| < \frac{\eps}{|c|}$ となる。この $N$ に対して、すべての $n \geq N$ で
+\[
+|c \cdot a_n - c \cdot L|
+= |c| \cdot |a_n - L|
+< |c| \cdot \frac{\eps}{|c|}
+= \eps
+\]
+となる。$\eps > 0$ は任意であったから、$\lim_{n \to \infty} (c \cdot a_n) = c \cdot L$。 \qed
+\end{proofbox}
+
+% -----------------------------------------------------------
+\subsection{加法の法則}
+% -----------------------------------------------------------
+
+\begin{theorembox}[定理：和の極限]
+\begin{theorem}[加法]\label{thm:addition}
+$\lim_{n \to \infty} a_n = L$、$\lim_{n \to \infty} b_n = M$ とするとき、
+\[
+\lim_{n \to \infty} (a_n + b_n) = L + M.
+\]
+\end{theorem}
+\end{theorembox}
+
+\begin{proofbox}
+\textbf{証明}\ \\
+\noindent
+任意に $\eps > 0$ を与える。三角不等式より
+\[
+|(a_n + b_n) - (L + M)|
+= |(a_n - L) + (b_n - M)|
+\leq |a_n - L| + |b_n - M|.
+\]
+
+仮定より、$\frac{\eps}{2} > 0$ に対してある $N_1 \in \N$ が存在し、すべての $n \geq N_1$ で $|a_n - L| < \frac{\eps}{2}$。同様に、ある $N_2 \in \N$ が存在し、すべての $n \geq N_2$ で $|b_n - M| < \frac{\eps}{2}$。
+
+$N = \max\{N_1, N_2\}$ とおくと、すべての $n \geq N$ に対して
+\[
+|(a_n + b_n) - (L + M)|
+\leq |a_n - L| + |b_n - M|
+< \frac{\eps}{2} + \frac{\eps}{2}
+= \eps
+\]
+となる。$\eps > 0$ は任意であったから、$\lim_{n \to \infty} (a_n + b_n) = L + M$。 \qed
+\end{proofbox}
+
+\kaisetsu{三角不等式 $|x + y| \leq |x| + |y|$ は解析学で最も頻繁に使われる不等式の一つです。二つの差を個別に小さく抑えて、その和を $\eps$ 以下にするという手法は、極限の証明の典型的なテクニックです。}
+
+% -----------------------------------------------------------
+\subsection{乗法の法則}
+% -----------------------------------------------------------
+
+\begin{theorembox}[定理：積の極限]
+\begin{theorem}[乗法]\label{thm:multiplication}
+$\lim_{n \to \infty} a_n = L$、$\lim_{n \to \infty} b_n = M$ とするとき、
+\[
+\lim_{n \to \infty} (a_n \cdot b_n) = L \cdot M.
+\]
+\end{theorem}
+\end{theorembox}
+
+\begin{proofbox}
+\textbf{証明}\ \\
+\noindent
+まず、$a_n b_n - LM$ を以下のように分解する：
+\[
+a_n b_n - LM
+= a_n b_n - a_n M + a_n M - LM
+= a_n(b_n - M) + M(a_n - L).
+\]
+よって、三角不等式より
+\[
+|a_n b_n - LM|
+\leq |a_n| \cdot |b_n - M| + |M| \cdot |a_n - L|.
+\]
+
+ここで、$\{a_n\}$ は収束列であるから有界であり、ある $K > 0$ が存在してすべての $n \in \N$ に対して $|a_n| \leq K$ となる。
+
+任意に $\eps > 0$ を与える。
+\begin{itemize}[itemsep=0.2em]
+\item $\lim_{n \to \infty} b_n = M$ より、正数 $\frac{\eps}{2K}$ に対してある $N_1 \in \N$ が存在し、$n \geq N_1$ で $|b_n - M| < \frac{\eps}{2K}$。
+\item $\lim_{n \to \infty} a_n = L$ より、正数 $\frac{\eps}{2(|M|+1)}$ に対してある $N_2 \in \N$ が存在し、$n \geq N_2$ で $|a_n - L| < \frac{\eps}{2(|M|+1)}$。
+\end{itemize}
+
+$N = \max\{N_1, N_2\}$ とおくと、すべての $n \geq N$ で
+\begin{align*}
+|a_n b_n - LM|
+&\leq |a_n| \cdot |b_n - M| + |M| \cdot |a_n - L| \\
+&< K \cdot \frac{\eps}{2K} + |M| \cdot \frac{\eps}{2(|M|+1)} \\
+&< \frac{\eps}{2} + \frac{\eps}{2}
+= \eps
+\end{align*}
+となる。$\eps > 0$ は任意であったから、$\lim_{n \to \infty} (a_n b_n) = LM$。 \qed
+\end{proofbox}
+
+% -----------------------------------------------------------
+\subsection{除法の法則}
+% -----------------------------------------------------------
+
+\begin{theorembox}[定理：商の極限]
+\begin{theorem}[除法]\label{thm:division}
+$\lim_{n \to \infty} a_n = L$、$\lim_{n \to \infty} b_n = M$、$M \neq 0$ とするとき、
+\[
+\lim_{n \to \infty} \frac{a_n}{b_n} = \frac{L}{M}.
+\]
+\end{theorem}
+\end{theorembox}
+
+\begin{proofbox}
+\textbf{証明}\ \\
+\noindent
+まず $\lim_{n \to \infty} \frac{1}{b_n} = \frac{1}{M}$ を示し、次に乗法の定理を適用する。
+
+\textbf{第一段：} $\frac{1}{b_n} \to \frac{1}{M}$ の証明
+
+$M \neq 0$ より $\frac{|M|}{2} > 0$ である。$\lim_{n \to \infty} b_n = M$ より、この正数に対してある $N_1 \in \N$ が存在し、すべての $n \geq N_1$ で $|b_n - M| < \frac{|M|}{2}$ となる。逆三角不等式より、このとき
+\[
+|b_n| \geq |M| - |b_n - M| > |M| - \frac{|M|}{2} = \frac{|M|}{2} > 0
+\]
+となり、$n \geq N_1$ で $b_n \neq 0$ が保証される。
+
+次に、任意の $\eps > 0$ に対して
+\[
+\left|\frac{1}{b_n} - \frac{1}{M}\right|
+= \frac{|b_n - M|}{|b_n| \cdot |M|}
+< \frac{|b_n - M|}{\frac{|M|}{2} \cdot |M|}
+= \frac{2|b_n - M|}{|M|^2}.
+\]
+
+$\lim_{n \to \infty} b_n = M$ より、正数 $\frac{|M|^2 \eps}{2}$ に対してある $N_2 \in \N$ が存在し、$n \geq N_2$ で $|b_n - M| < \frac{|M|^2 \eps}{2}$ となる。
+
+$N = \max\{N_1, N_2\}$ とおくと、すべての $n \geq N$ で
+\[
+\left|\frac{1}{b_n} - \frac{1}{M}\right|
+< \frac{2}{|M|^2} \cdot \frac{|M|^2 \eps}{2}
+= \eps
+\]
+となる。よって $\lim_{n \to \infty} \frac{1}{b_n} = \frac{1}{M}$。
+
+\textbf{第二段：} 乗法の定理（定理~\ref{thm:multiplication}）より
+\[
+\lim_{n \to \infty} \frac{a_n}{b_n}
+=
+\lim_{n \to \infty} \left(a_n \cdot \frac{1}{b_n}\right)
+=
+L \cdot \frac{1}{M}
+=
+\frac{L}{M}.
+\]
+\qed
+\end{proofbox}
+
+\kaisetsu{除法の証明で「逆三角不等式」$\bigl||x| - |y|\bigr| \leq |x - y|$ を用いました。これは通常の三角不等式から導かれる重要な不等式です。証明の核心は、分母 $b_n$ が 0 に近づかないようにある程度離れたところに押さえ込む点にあります。}
+
+% -----------------------------------------------------------
+\subsection{応用：有理式の極限計算}
+% -----------------------------------------------------------
+
+\begin{examplebox}[例：$\lim (3n+5)/(2n+7)$ の計算]
+\begin{example}\label{ex:rational}
+$\displaystyle\lim_{n \to \infty} \frac{3n+5}{2n+7}$ を求める。
+
+\textbf{解答。}
+分子・分母を $n$ で割って
+\[
+\frac{3n+5}{2n+7} = \frac{3 + \frac{5}{n}}{2 + \frac{7}{n}}.
+\]
+
+まず、$\lim_{n \to \infty} \frac{1}{n} = 0$ を証明する。任意に $\eps > 0$ を与えると、$N = \left\lfloor\frac{1}{\eps}\right\rfloor + 1$ とおけば、すべての $n \geq N$ に対して
+\[
+\left|\frac{1}{n} - 0\right| = \frac{1}{n} \leq \frac{1}{N} < \eps
+\]
+となる。$\eps > 0$ は任意であったから $\lim_{n \to \infty} \frac{1}{n} = 0$。
+
+スカラー倍の法則より $\lim_{n \to \infty} \frac{5}{n} = 5 \cdot 0 = 0$、$\lim_{n \to \infty} \frac{7}{n} = 7 \cdot 0 = 0$。
+
+加法の法則より
+\[
+\lim_{n \to \infty} \left(3 + \frac{5}{n}\right) = 3 + 0 = 3,
+\qquad
+\lim_{n \to \infty} \left(2 + \frac{7}{n}\right) = 2 + 0 = 2.
+\]
+
+$2 \neq 0$ であるから除法の法則が適用でき
+\[
+\lim_{n \to \infty} \frac{3n+5}{2n+7} = \frac{3}{2}.
+\]
+\qed
+\end{example}
+\end{examplebox}
+
+% -----------------------------------------------------------
+\subsection{連続関数との合成}
+% -----------------------------------------------------------
+
+\begin{theorembox}[定理：連続関数との合成]
+\begin{theorem}[合成則]\label{thm:composition}
+$\lim_{n \to \infty} a_n = L$ であり、$f: \R \to \R$ が $x = L$ で連続ならば、
+\[
+\lim_{n \to \infty} f(a_n) = f(L).
+\]
+\end{theorem}
+\end{theorembox}
+
+\begin{proofbox}
+\textbf{証明}\ \\
+\noindent
+$f$ が $L$ で連続であるから、任意の $\eps > 0$ に対してある $\delta > 0$ が存在し、
+\[
+|x - L| < \delta \implies |f(x) - f(L)| < \eps
+\]
+となる。この $\delta > 0$ に対して、$\lim_{n \to \infty} a_n = L$ よりある $N \in \N$ が存在し、すべての $n \geq N$ で $|a_n - L| < \delta$ となる。したがって、この $N$ に対してすべての $n \geq N$ で
+\[
+|a_n - L| < \delta \implies |f(a_n) - f(L)| < \eps
+\]
+となる。$\eps > 0$ は任意であったから、$\lim_{n \to \infty} f(a_n) = f(L)$。 \qed
+\end{proofbox}
+
+\newpage
+
+% ============================================================
+% 第3章：関数の逆数の極限
+% ============================================================
+\section{関数の逆数の極限定理}\label{sec:reciprocal}
+
+\begin{theorembox}[定理：逆数の極限]
+\begin{theorem}[逆数の極限]\label{thm:reciprocal}
+$g$ を $x_0$ の近傍（$x_0$ を除く）で定義された関数とする。$\lim_{x \to x_0} g(x) = m$、$m \neq 0$ のとき、
+\[
+\lim_{x \to x_0} \frac{1}{g(x)} = \frac{1}{m}.
+\]
+\end{theorem}
+\end{theorembox}
+
+\begin{proofbox}
+\textbf{証明}\ \\
+\noindent
+以下の三段構成で示す。
+
+\textbf{第一段：$|g(x)|$ の正の下界の確保。}
+
+$\lim_{x \to x_0} g(x) = m$ かつ $m \neq 0$ より、$\frac{|m|}{2} > 0$ に対してある $\delta_1 > 0$ が存在し、
+\[
+0 < |x - x_0| < \delta_1 \implies |g(x) - m| < \frac{|m|}{2}
+\]
+となる。逆三角不等式より、このとき
+\[
+|g(x)| \geq |m| - |g(x) - m| > |m| - \frac{|m|}{2} = \frac{|m|}{2}.
+\]
+
+\textbf{第二段：主要な評価。}
+
+任意の $\eps > 0$ に対して
+\[
+\left|\frac{1}{g(x)} - \frac{1}{m}\right|
+= \frac{|g(x) - m|}{|g(x)| \cdot |m|}
+< \frac{|g(x) - m|}{\frac{|m|}{2} \cdot |m|}
+= \frac{2|g(x) - m|}{|m|^2}
+\]
+となる。
+
+\textbf{第三段：$\delta$ の選び方。}
+
+$\lim_{x \to x_0} g(x) = m$ より、正数 $\frac{|m|^2 \eps}{2}$ に対してある $\delta_2 > 0$ が存在し、
+\[
+0 < |x - x_0| < \delta_2 \implies |g(x) - m| < \frac{|m|^2 \eps}{2}
+\]
+となる。$\delta = \min\{\delta_1, \delta_2\}$ とおくと、すべての $x$ で $0 < |x - x_0| < \delta$ を満たすものに対して
+\[
+\left|\frac{1}{g(x)} - \frac{1}{m}\right|
+< \frac{2}{|m|^2} \cdot \frac{|m|^2 \eps}{2}
+= \eps
+\]
+となる。$\eps > 0$ は任意であったから、$\lim_{x \to x_0} \frac{1}{g(x)} = \frac{1}{m}$。 \qed
+\end{proofbox}
+
+\begin{notebox}[証明のポイント]
+本証明の核心は、$g(x)$ が 0 に近づかないことを保証する点にある。$m \neq 0$ の仮定により、$g(x)$ は $x \to x_0$ のとき $|m|/2$ より大きい値を保つことが示され、これが逆数を安全に取るための鍵となる。
+\end{notebox}
+
+\newpage
+
+% ============================================================
+% 第4章：極限を持つ関数の局所有界性
+% ============================================================
+\section{局所有界性と非零極限の評価}\label{sec:boundedness}
+
+% -----------------------------------------------------------
+\subsection{局所有界性定理}
+% -----------------------------------------------------------
+
+\begin{theorembox}[定理：局所有界性]
+\begin{theorem}[局所有界性]\label{thm:bounded}
+$x_0$ の近傍（$x_0$ を除く）で定義された関数 $f$ が $x \to x_0$ で有限値 $L \in \R$ に収束するとき、$f$ は $x_0$ のある近傍で有界である。すなわち、ある $\delta > 0$ と $M > 0$ が存在して、
+\[
+0 < |x - x_0| < \delta \implies |f(x)| \leq M.
+\]
+\end{theorem}
+\end{theorembox}
+
+\begin{proofbox}
+\textbf{証明}\ \\
+\noindent
+$\lim_{x \to x_0} f(x) = L$ より、$\eps = 1$ に対してある $\delta > 0$ が存在し、
+\[
+0 < |x - x_0| < \delta \implies |f(x) - L| < 1
+\]
+となる。三角不等式より
+\[
+|f(x)| = |f(x) - L + L| \leq |f(x) - L| + |L| < 1 + |L|.
+\]
+$M = 1 + |L|$ とおけば、すべての $x$ で $0 < |x - x_0| < \delta$ を満たすものに対して $|f(x)| < M$ となる。したがって $f$ は近傍 $\{x : 0 < |x - x_0| < \delta\}$ で有界である。 \qed
+\end{proofbox}
+
+% -----------------------------------------------------------
+\subsection{非零極限の評価}
+% -----------------------------------------------------------
+
+\begin{theorembox}[定理：非零極限の下界評価]
+\begin{theorem}[非零極限の下界]\label{thm:nonzero}
+$\lim_{x \to x_0} f(x) = L$ かつ $L \neq 0$ のとき、ある $\delta > 0$ と $k > 0$ が存在して、
+\[
+0 < |x - x_0| < \delta \implies |f(x)| > k.
+\]
+特に、$k = \frac{|L|}{2}$ を取ることができる。
+\end{theorem}
+\end{theorembox}
+
+\begin{proofbox}
+\textbf{証明}\ \\
+\noindent
+$L$ の符号に応じて二つの場合に分ける。
+
+\textbf{場合1：$L > 0$。}
+
+$\eps = \frac{L}{2} > 0$ とおくと、$\lim_{x \to x_0} f(x) = L$ よりある $\delta > 0$ が存在し、
+\[
+0 < |x - x_0| < \delta \implies |f(x) - L| < \frac{L}{2}
+\]
+となる。これは
+\[
+-\frac{L}{2} < f(x) - L < \frac{L}{2}
+\implies
+f(x) > L - \frac{L}{2} = \frac{L}{2} > 0
+\]
+と同値であるから、$|f(x)| > \frac{L}{2}$ となる。
+
+\textbf{場合2：$L < 0$。}
+
+$\eps = -\frac{L}{2} > 0$ とおくと、同様にある $\delta > 0$ が存在し、
+\[
+0 < |x - x_0| < \delta \implies |f(x) - L| < -\frac{L}{2}
+\]
+より
+\[
+f(x) < L + \left(-\frac{L}{2}\right) = \frac{L}{2} < 0
+\]
+となり、$|f(x)| > \frac{|L|}{2}$ を得る。
+
+いずれの場合も $k = \frac{|L|}{2}$ を取れば所望の評価が成り立つ。 \qed
+\end{proofbox}
+
+\begin{notebox}[直感的解釈]
+この定理は、「関数が 0 でない値 $L$ に近づくなら、その近傍では関数値が 0 からある程度離れた値を保つ」ことを保証します。これは後の逆数の極限などで本質的に用いられます。
+\end{notebox}
+
+\newpage
+
+% ============================================================
+% 第5章：上限（最小上界）
+% ============================================================
+\section{上限（最小上界）の理論}\label{sec:supremum}
+
+% -----------------------------------------------------------
+\subsection{基本定義}
+% -----------------------------------------------------------
+
+$\emptyset \neq S \subseteq \R$ とする。
+
+\begin{definitionbox}[定義：上界]
+\begin{definition}[上界]\label{def:upper-bound}
+実数 $a \in \R$ が $S$ の\textbf{上界}（upper bound）であるとは、
+\[
+x \leq a \quad (\forall x \in S)
+\]
+が成り立つことをいう。
+\end{definition}
+\kaisetsu{上界は集合のすべての元より大きいか等しい実数です。上界は存在すれば無限に存在します（上界より大きい数もまた上界）。}
+\end{definitionbox}
+
+\begin{definitionbox}[定義：上限（最小上界）]
+\begin{definition}[上限（Supremum）]\label{def:supremum}
+実数 $\alpha \in \R$ が $S$ の\textbf{上限}（最小上界、Least Upper Bound）であるとは、以下の二条件を満たすことをいい、$\alpha = \sup S$ と書く：
+\begin{enumerate}[label=(\roman*)]
+\item $\alpha$ は $S$ の上界である：$\forall x \in S,\ x \leq \alpha$；
+\item $\alpha$ は最小の上界である：$S$ の任意の上界 $b$ に対して $\alpha \leq b$。
+\end{enumerate}
+\end{definition}
+\end{definitionbox}
+
+% -----------------------------------------------------------
+\subsection{上限の例}
+% -----------------------------------------------------------
+
+\begin{examplebox}[上限の具体例]
+\begin{example}\label{ex:sup-examples}
+\begin{enumerate}[label=(\arabic*)]
+\item $S = (0, 1)$（開区間）のとき、$\sup S = 1$。ただし $1 \notin S$ で、$S$ は最大元を持たない。
+\item $S = [0, 1]$（閉区間）のとき、$\sup S = 1$。ここで $1 \in S$ であるから、$\max S = 1 = \sup S$。
+\item $S = \N$（自然数全体）のとき、$S$ は上に有界でないから、実数としての上限は存在しない。拡張実数では $\sup S = +\infty$ と書く。
+\end{enumerate}
+\end{example}
+\kaisetsu{開区間 $(0,1)$ は最大元を持ちませんが、上限は存在します。これが上限が最大元より一般的な概念であることを示しています。}
+\end{examplebox}
+
+% -----------------------------------------------------------
+\subsection{上限の同値な特徴付け}
+% -----------------------------------------------------------
+
+\begin{propbox}[命題：上限の同値な条件]
+\begin{proposition}[上限の同値特徴付け]\label{prop:sup-equiv}
+$\emptyset \neq S \subseteq \R$、$\alpha \in \R$ とするとき、
+\[
+\alpha = \sup S
+\iff
+\begin{cases}
+\text{(i)}\ \alpha\ \text{は}\ S\ \text{の上界}, \\[0.3em]
+\text{(ii)}\ \forall \eps > 0,\ \exists x \in S\ \text{s.t.}\ x > \alpha - \eps.
+\end{cases}
+\]
+条件 (ii) は「$\alpha$ より小さい数はいずれも $S$ の上界になれない」という意味である。
+\end{proposition}
+\end{propbox}
+
+\begin{proofbox}
+\textbf{証明}\ \\
+\noindent
+両方向を示す。
+
+\textbf{$\Rightarrow$ 方向：} $\alpha = \sup S$ と仮定する。
+
+(i) 定義より明らか。
+
+(ii) を背理法で示す。(ii) が成り立たないと仮定すると、ある $\eps > 0$ が存在してすべての $x \in S$ に対して $x \leq \alpha - \eps$ となる。これは $\alpha - \eps$ が $S$ の上界であることを意味し、$\alpha - \eps < \alpha$ であるから、$\alpha$ が「最小」の上界であることに矛盾する。したがって (ii) が成り立つ。
+
+\textbf{$\Leftarrow$ 方向：} (i), (ii) が成り立つと仮定する。
+
+(i) より $\alpha$ は $S$ の上界である。$b$ を $S$ の任意の上界とする。$\alpha \leq b$ を示すために、背理法を用いる。
+
+$\alpha > b$ と仮定すると、$\eps = \alpha - b > 0$ とおける。(ii) より、ある $x \in S$ が存在して $x > \alpha - \eps = \alpha - (\alpha - b) = b$ となる。しかし $x \in S$ かつ $x > b$ は $b$ が $S$ の上界であることに矛盾する。したがって $\alpha \leq b$ となり、$\alpha = \sup S$ である。 \qed
+\end{proofbox}
+
+% -----------------------------------------------------------
+\subsection{上限の一意性}
+% -----------------------------------------------------------
+
+\begin{propbox}[命題：上限の一意性]
+\begin{proposition}[上限の一意性]\label{prop:uniqueness}
+$a = \sup S$ かつ $b = \sup S$ ならば $a = b$。すなわち、上限（実数として存在すれば）は一つに定まる。
+\end{proposition}
+\end{propbox}
+
+\begin{proofbox}
+\textbf{証明}\ \\
+\noindent
+$a = \sup S$、$b = \sup S$ とする。定義より、$a$ と $b$ のいずれも $S$ の上界である。
+
+$a = \sup S$ であり $b$ は $S$ の上界であるから、上限の最小性より $a \leq b$。同様に $b = \sup S$ であり $a$ は $S$ の上界であるから、$b \leq a$。以上より $a \leq b$ かつ $b \leq a$ であるから、$a = b$。 \qed
+\end{proofbox}
+
+\newpage
+
+% ============================================================
+% 第6章：単調収束定理
+% ============================================================
+\section{単調収束定理}\label{sec:monotone}
+
+\begin{theorembox}[定理：単調収束定理（Monotone Convergence Theorem）]
+\begin{theorem}[単調収束定理]\label{thm:monotone}
+実数列 $\{x_n\}$ が以下の二条件を満たすとする：
+\begin{enumerate}[label=(\roman*)]
+\item \textbf{単調増加}：すべての $n \in \N$ に対して $x_n \leq x_{n+1}$；
+\item \textbf{上に有界}：ある $M \in \R$ が存在してすべての $n \in \N$ に対して $x_n \leq M$。
+\end{enumerate}
+このとき、$\{x_n\}$ は有限値に収束する。特に、
+\[
+\lim_{n \to \infty} x_n = \sup\{x_n : n \in \N\}.
+\]
+\end{theorem}
+\end{theorembox}
+
+\begin{proofbox}
+\textbf{証明}\ \\
+\noindent
+$S = \{x_n : n \in \N\}$ とおく。仮定 (ii) より $S$ は上に有界であり、$S \neq \emptyset$ でもあるから、実数の完備性公理より $S$ は上限を持つ。$x = \sup S = \sup\{x_n : n \in \N\} \in \R$ とおく。
+
+$\lim_{n \to \infty} x_n = x$ を示す。すなわち、任意の $\eps > 0$ に対してある $N \in \N$ が存在して、すべての $n \geq N$ で $|x_n - x| < \eps$ を示せばよい。
+
+$x = \sup S$ であるから、命題~\ref{prop:sup-equiv} の条件 (ii) より、任意の $\eps > 0$ に対してある $N \in \N$ が存在して $x_N > x - \eps$ となる。
+
+数列 $\{x_n\}$ は単調増加であるから、この $N$ に対してすべての $n \geq N$ で $x_n \geq x_N > x - \eps$ となる。
+
+一方、$x = \sup S$ は $S$ の上界であるから、すべての $n \in \N$ で $x_n \leq x < x + \eps$ となる。
+
+以上より、すべての $n \geq N$ で
+\[
+x - \eps < x_n \leq x < x + \eps
+\]
+となり、$|x_n - x| < \eps$ が従う。$\eps > 0$ は任意であったから、$\lim_{n \to \infty} x_n = x = \sup\{x_n : n \in \N\}$。 \qed
+\end{proofbox}
+
+\begin{notebox}[双対定理]
+単調減少かつ下に有界な数列も同様に、$\inf\{x_n : n \in \N\}$ に収束することが示される。
+\end{notebox}
+
+\begin{notebox}[本定理の重要性]
+単調収束定理は、実数の完備性（上限の存在）と極限の存在を橋渡しする中心的な定理である。収束の証明で「極限値が何か分からない」場合でも、単調性と有界性だけで収束を保証できる点が強力である。
+\end{notebox}
+
+\newpage
+
+% ============================================================
+% 第7章：まとめ
+% ============================================================
+\section{定理体系のまとめ}\label{sec:summary}
+
+本稿で厳密に定義・証明した結果を体系的に整理する。
+
+\subsection{定義群}
+
+\begin{center}
+\begin{tabular}{@{}ll@{}}
+\toprule
+\textbf{概念} & \textbf{核心条件} \\
+\midrule
+数列の収束 & $\forall \eps > 0,\ \exists N \in \N$ s.t. $n \geq N \implies |a_n - L| < \eps$ \\
+$+\infty$ への発散 & $\forall M > 0,\ \exists N \in \N$ s.t. $n \geq N \implies a_n > M$ \\
+$-\infty$ への発散 & $\forall M < 0,\ \exists N \in \N$ s.t. $n \geq N \implies a_n < M$ \\
+上界 & $x \leq a$（すべての $x \in S$ に対して） \\
+上限 & 最小の上界 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{定理群}
+
+\begin{center}
+\begin{tabular}{@{}ll@{}}
+\toprule
+\textbf{定理} & \textbf{内容} \\
+\midrule
+スカラー倍（定理~\ref{thm:scalar}） & $\lim (c \cdot a_n) = c \cdot \lim a_n$ \\
+加法（定理~\ref{thm:addition}） & $\lim (a_n + b_n) = \lim a_n + \lim b_n$ \\
+乗法（定理~\ref{thm:multiplication}） & $\lim (a_n b_n) = (\lim a_n)(\lim b_n)$ \\
+除法（定理~\ref{thm:division}） & $\lim \frac{a_n}{b_n} = \frac{\lim a_n}{\lim b_n}$（分母 $\neq 0$） \\
+合成（定理~\ref{thm:composition}） & $f$ 連続なら $\lim f(a_n) = f(\lim a_n)$ \\
+逆数（定理~\ref{thm:reciprocal}） & $\lim \frac{1}{g} = \frac{1}{\lim g}$（$\lim g \neq 0$） \\
+局所有界性（定理~\ref{thm:bounded}） & 極限存在 $\implies$ 局所有界 \\
+非零下界（定理~\ref{thm:nonzero}） & $L \neq 0 \implies |f(x)| > |L|/2$（近傍で） \\
+上限の特徴付け（命題~\ref{prop:sup-equiv}） & $\eps$-条件による同値な表現 \\
+上限の一意性（命題~\ref{prop:uniqueness}） & $\sup S$ は実数として一意 \\
+\textbf{単調収束定理}（定理~\ref{thm:monotone}） & 有界単調列は必ず収束する \\
+\bottomrule
+\end{tabular}
+\end{center}
+\end{document}
