@@ -228,7 +228,7 @@
 
   {\Large\textsc{Andre YI}\par}
   \vspace{0.4cm}
-  {\large デジタル版: \url{https://www.andreyis.com}\par}
+  {\large デジタル版: \url{https://github.com/Andriyichenko/assignments}\par}
   \vspace{0.8cm}
   {\large \today\par}
 \end{titlepage}
@@ -360,13 +360,13 @@ $\displaystyle\lim_{n \to \infty} n = +\infty$ を証明する。
 
 \textbf{証明}\ \\
 \noindent
-任意に $M > 0$ を与える。$N = \lfloor M \rfloor + 1$ とおくと、すべての $n \geq N$ に対して
+任意に実数$M$ を与える。$N = \max\{1, \lfloor M \rfloor + 1\}$ とおくと、すべての $n \geq N$ に対して
 \[
-n \geq N = \lfloor M \rfloor + 1 > M
+n \geq N \geq \lfloor M \rfloor + 1 > M
 \]
-となる。$M > 0$ は任意であったから、$\lim_{n \to \infty} n = +\infty$。 \qed
+となる。実数$M$は任意であったから、$\displaystyle\lim_{n \to \infty} n = +\infty$。 \qed
 \end{example}
-\kaisetsu{$\lfloor M \rfloor$ は $M$ を超えない最大の整数です。例えば $\lfloor 3.7 \rfloor = 3$、$\lfloor 5 \rfloor = 5$ です。}
+\kaisetsu{$\lfloor M \rfloor$ は $M$ を超えない最大の整数です。例えば $\lfloor 3.7 \rfloor = 3$、$\lfloor 5 \rfloor = 5$、$\lfloor -2.3 \rfloor = -3$ です。}
 \end{examplebox}
 
 \begin{examplebox}{例：$\lim (5-n) = -\infty$}
@@ -375,11 +375,11 @@ $\displaystyle\lim_{n \to \infty} (5 - n) = -\infty$ を証明する。
 
 \textbf{証明}\ \\
 \noindent
-任意に $M < 0$ を与える。不等式 $5 - n < M$ は $n > 5 - M$ と同値である。$M < 0$ より $5 - M > 5$ であるから、$N = \lfloor 5 - M \rfloor + 1$ とおけば、すべての $n \geq N$ に対して
+任意に実数$M$ を与える。不等式 $5 - n < M \implies n > 5 - M$ である。$N = \max\{1, \lfloor 5 - M \rfloor + 1\}$ とおけば、すべての $n \geq N$ に対して
 \[
-n \geq N > 5 - M \implies 5 - n < M
+n \geq N \geq \lfloor 5 - M \rfloor + 1 > 5 - M
 \]
-となる。$M < 0$ は任意であったから、$\lim_{n \to \infty} (5 - n) = -\infty$。 \qed
+となる。実数$M$ は任意であったから、$\displaystyle\lim_{n \to \infty} (5 - n) = -\infty$。 \qed
 \end{example}
 \end{examplebox}
 
@@ -389,11 +389,11 @@ $\displaystyle\lim_{n \to \infty} (13n + 1) = +\infty$ を証明する。
 
 \textbf{証明}\ \\
 \noindent
-任意に $M > 0$ を与える。$13n + 1 > M$ は $n > \frac{M-1}{13}$ と同値である。$N = \max\left\{1,\left\lfloor\frac{M-1}{13}\right\rfloor + 1\right\}$ とおくと、すべての $n \geq N$ に対して
+任意に実数$M$ を与える。$13n + 1 > M\implies n > \frac{M-1}{13}$ である。$N = \max\left\{1,\left\lfloor\frac{M-1}{13}\right\rfloor + 1\right\}$ とおくと、すべての $n \geq N$ に対して
 \[
 13n + 1 \geq 13N + 1 > 13 \cdot \frac{M-1}{13} + 1 = M
 \]
-となる。$M > 0$ は任意であったから、$\lim_{n \to \infty} (13n + 1) = +\infty$。 \qed
+となる。実数$M$ は任意であったから、$\displaystyle\lim_{n \to \infty} (13n + 1) = +\infty$。 \qed
 \end{example}
 \end{examplebox}
 
@@ -522,7 +522,7 @@ a_n b_n - LM
 任意に $\eps > 0$ を与える。
 \begin{itemize}[itemsep=0.2em]
 \item $\lim_{n \to \infty} b_n = M$ より、正数 $\frac{\eps}{2K}$ に対してある $N_1 \in \N$ が存在し、$n \geq N_1$ で $|b_n - M| < \frac{\eps}{2K}$。
-\item $\lim_{n \to \infty} a_n = L$ より、正数 $\frac{\eps}{2(|M|+1)}$ に対してある $N_2 \in \N$ が存在し、$n \geq N_2$ で $|a_n - L| < \frac{\eps}{2(|M|+1)}$。
+\item $\lim_{n \to \infty} a_n = L$ より、正数 $\frac{\eps}{2(|M|+1)}$ に対してある $N_2 \in \N$ が存在し、$n \geq N_2$ で $|a_n - L| < \frac{\eps}{2(|M|+1)}$。{{\color{red}{ ここで、$|M| + 1$ を分母に入れたのは、$|M|$ が 0 の場合も考慮して、分母が正になるようにするためである。}}}
 \end{itemize}
 
 $N = \max\{N_1, N_2\}$ とおくと、すべての $n \geq N$ で
@@ -977,8 +977,8 @@ x - \eps < x_n \leq x < x + \eps
 \textbf{概念} & \textbf{核心条件} \\
 \midrule
 数列の収束 & $\forall \eps > 0,\ \exists N \in \N$ s.t. $n \geq N \implies |a_n - L| < \eps$ \\
-$+\infty$ への発散 & $\forall M > 0,\ \exists N \in \N$ s.t. $n \geq N \implies a_n > M$ \\
-$-\infty$ への発散 & $\forall M < 0,\ \exists N \in \N$ s.t. $n \geq N \implies a_n < M$ \\
+$+\infty$ への発散 & $\forall M\in \mathbb{R},\ \exists N \in \N$ s.t. $n \geq N \implies a_n > M$ \\
+$-\infty$ への発散 & $\forall M \in \mathbb{R},\ \exists N \in \N$ s.t. $n \geq N \implies a_n < M$ \\
 上界 & $x \leq a$（すべての $x \in S$ に対して） \\
 上限 & 最小の上界 \\
 \bottomrule
