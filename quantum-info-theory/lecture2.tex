@@ -1,0 +1,1292 @@
+%% lecture 2 %%%%
+\documentclass[dvipdfmx,a4paper]{jsarticle}
+\usepackage{amsmath,amssymb,amsfonts,amsthm}
+\usepackage[dvipdfmx]{graphicx}
+\usepackage{tikz}
+\usetikzlibrary{positioning, intersections, calc, arrows.meta, math, through, shadows,automata}
+\usepackage{caption}
+\usepackage{tcolorbox}
+\tcbuselibrary{theorems,breakable}
+\usepackage{enumerate}
+\usepackage{mathtools}
+\usepackage{otf}
+\usepackage{xspace}
+\usepackage{newpxtext}
+\usepackage[utf8]{inputenc}
+\usepackage{CJKutf8,CJKspace,CJKpunct}
+\usepackage{pgfplots}
+\usepackage{lastpage}
+\usepackage{fancyhdr}
+\usepackage{float}
+\usepackage{lipsum}
+\usepackage{okumacro}
+\usepackage[dvipdfmx,colorlinks=true, linkcolor=blue]{hyperref}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\textsc{特殊講義（専門01)}}
+\fancyhead[R]{\texttt{YI Ran} - $\mathnormal{61112600301}$}
+\fancyfoot[C]{\thepage\quad \textit{of}\quad\pageref*{LastPage}}
+
+
+\fancypagestyle{plain}{
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\fancyfoot[C]{\thepage\quad \textit{of}\quad\pageref*{LastPage}}
+}
+
+\pgfplotsset{compat=1.18}
+\renewcommand{\appendixname}{Appendix}
+
+\renewcommand{\abstractname}{問題設定}
+
+\newtagform{textbf}[\textbf]{[}{]}
+\usetagform{textbf}
+
+\newcommand*{\ie}{\textbf{\textit{i.e.}}\@\xspace}
+
+\renewcommand{\qedsymbol}{$\blacksquare$}
+
+\newtcbtheorem[]{reidai}{例題}
+{fonttitle=\gtfamily\sffamily\bfseries\upshape\large,
+colframe=black,colback=black!15!white,
+rightrule=1pt,leftrule=1pt,bottomrule=2pt,
+colbacktitle=black,theorem style=standard,breakable,arc=10pt}
+{tha}
+
+\renewcommand{\thefootnote}{\arabic{footnote}}
+
+\newtheoremstyle{mystyle}%
+{}{}{}{}{\bfseries}{:}{ }
+{\thmname{#1}\thmnumber{ #2}\thmnote{ (#3)}}
+
+\theoremstyle{mystyle}
+
+\newtheorem{dfn}{\texttt{Def.}}[section]
+\newtheorem{exm}[dfn]{\texttt{Ex.}}
+\newtheorem{prop}[dfn]{\texttt{Prop.}}
+\newtheorem{lem}[dfn]{\texttt{Lem.}}
+\newtheorem{thm}[dfn]{\texttt{Thm.}}
+\newtheorem{cor}[dfn]{\texttt{Cor.}}
+\newtheorem{rem}[dfn]{\texttt{Rem.}}
+\newtheorem{fact}[dfn]{\texttt{Fact}}
+
+\newcommand{\kai}
+{\noindent
+\begin{tikzpicture}[scale=0.2, baseline=2.8pt]
+\draw (3.3,1.2) node{\large\textgt{解 答}};
+\draw[thick, rounded corners=3pt,] (0,0)--(6.5,0)--(6.5,2.4)--(0,2.4)--cycle;
+\end{tikzpicture}}
+
+\newcommand{\shomei}
+{\noindent
+\begin{tikzpicture}[scale=0.2, baseline=2.8pt]
+\draw (3.3,1.2) node{\textgt{証 明}};
+\draw[double,thick,rounded corners=3pt,] (0,0)--(6.5,0)--(6.5,2.4)--(0,2.4)--cycle;
+\end{tikzpicture};}
+
+\newcommand{\hosoku}{\noindent
+\begin{tikzpicture}[scale=0.2, baseline=2.8pt]
+\draw (6,1) node{\large\textgt{補足}};
+\fill (0,1)--(1,0)--(2,1)--(1,2)--cycle;
+\fill[gray] (1,1)--(2,0)--(3,1)--(2,2)--cycle;
+\fill (2,1)--(3,0)--(4,1)--(3,2)--cycle;
+\fill (10,1)--(11,0)--(12,1)--(11,2)--cycle;
+\fill[gray] (9,1)--(10,0)--(11,1)--(10,2)--cycle;
+\fill (8,1)--(9,0)--(10,1)--(9,2)--cycle;
+\end{tikzpicture};}
+
+\newcommand{\chui}{\noindent
+\begin{tikzpicture}[scale=0.2, baseline=2.8pt]
+\fill (0,0)--(6.5,0)--(6.5,2.2)--(0,2.2);
+\draw (3.3,1) node[white]{\large\textgt{注意！}};
+\draw[thick] (0,0)--(6.5,0)--(6.5,2.2)--(0,2.2)--cycle;
+\end{tikzpicture};}
+
+\title{\vspace{-3cm} \textbf{\texttt{REPORT 2(SPECIAL LECTURES)}}}
+\author{\texttt{YI Ran} - $\mathnormal{61112600301}$\\ \texttt{andreyi@outlook.jp}}
+\date{\today}
+
+\begin{document}
+\maketitle
+\thispagestyle{plain}
+
+\begin{abstract} %概要
+  \noindent
+\textrm{Let $H=\mathbb{C}^2$ and $\sigma_0,\sigma_1,\sigma_2$ and $\sigma_3$ be the Pauli matrices on $H$.
+That is,}
+\[
+\sigma_0=
+\begin{pmatrix}
+1 & 0\\
+0 & 1
+\end{pmatrix},
+\qquad
+\sigma_1=
+\begin{pmatrix}
+0 & 1\\
+1 & 0
+\end{pmatrix},
+\]
+\[
+\sigma_2=
+\begin{pmatrix}
+0 & -i\\
+i & 0
+\end{pmatrix},
+\qquad
+\sigma_3=
+\begin{pmatrix}
+1 & 0\\
+0 & -1
+\end{pmatrix}.
+\]
+\end{abstract}
+
+%============================================================
+\section*{\boxed{\textbf{\large 問1}}}
+%============================================================
+
+\textrm{Let $H=\mathbb{C}^2$ and let
+\[
+|0\rangle=
+\begin{pmatrix}
+1\\
+0
+\end{pmatrix},
+\qquad
+|1\rangle=
+\begin{pmatrix}
+0\\
+1
+\end{pmatrix}
+\]
+be the canonical basis for $\mathbb{C}^2$.
+Express $\sigma_1,\sigma_2,\sigma_3$ by the ket vectors $|0\rangle$ and $|1\rangle$.}
+
+\vspace{1em}
+
+%============================================================
+\section*{\boxed{\textbf{\large 解答}}}
+%============================================================
+
+\begin{proof}
+\ \\
+まず，$|0\rangle,|1\rangle$ の bra を書くと
+\[
+\langle 0|=
+\begin{pmatrix}
+1 & 0
+\end{pmatrix},
+\qquad
+\langle 1|=
+\begin{pmatrix}
+0 & 1
+\end{pmatrix}
+\]
+である．
+
+\medskip
+\noindent
+次に，これらから作られる外積を一つずつ計算する．
+\[
+|0\rangle\langle 0|
+=
+\begin{pmatrix}
+1\\
+0
+\end{pmatrix}
+\begin{pmatrix}
+1 & 0
+\end{pmatrix}
+=
+\begin{pmatrix}
+1 & 0\\
+0 & 0
+\end{pmatrix},
+\qquad
+|0\rangle\langle 1|
+=
+\begin{pmatrix}
+1\\
+0
+\end{pmatrix}
+\begin{pmatrix}
+0 & 1
+\end{pmatrix}
+=
+\begin{pmatrix}
+0 & 1\\
+0 & 0
+\end{pmatrix},
+\]
+\[
+|1\rangle\langle 0|
+=
+\begin{pmatrix}
+0\\
+1
+\end{pmatrix}
+\begin{pmatrix}
+1 & 0
+\end{pmatrix}
+=
+\begin{pmatrix}
+0 & 0\\
+1 & 0
+\end{pmatrix},
+\qquad
+|1\rangle\langle 1|
+=
+\begin{pmatrix}
+0\\
+1
+\end{pmatrix}
+\begin{pmatrix}
+0 & 1
+\end{pmatrix}
+=
+\begin{pmatrix}
+0 & 0\\
+0 & 1
+\end{pmatrix}.
+\]
+
+\medskip
+\noindent
+以上を用いて $\sigma_1,\sigma_2,\sigma_3$ を表す．
+
+\paragraph{\textbf{$\sigma_1$ の場合}} \ \\
+\[
+|0\rangle\langle 1|+|1\rangle\langle 0|
+=
+\begin{pmatrix}
+0 & 1\\
+0 & 0
+\end{pmatrix}
++
+\begin{pmatrix}
+0 & 0\\
+1 & 0
+\end{pmatrix}
+=
+\begin{pmatrix}
+0 & 1\\
+1 & 0
+\end{pmatrix}
+=
+\sigma_1.
+\]
+したがって，
+\[
+\sigma_1=|0\rangle\langle 1|+|1\rangle\langle 0|
+\]
+
+\paragraph{\textbf{$\sigma_2$ の場合}} \ \\
+\[
+-i|0\rangle\langle 1|+i|1\rangle\langle 0|
+=
+-i
+\begin{pmatrix}
+0 & 1\\
+0 & 0
+\end{pmatrix}
++i
+\begin{pmatrix}
+0 & 0\\
+1 & 0
+\end{pmatrix}
+=
+\begin{pmatrix}
+0 & -i\\
+i & 0
+\end{pmatrix}
+=
+\sigma_2.
+\]
+したがって，
+\[
+\sigma_2=-i|0\rangle\langle 1|+i|1\rangle\langle 0|
+\]
+
+\paragraph{\textbf{$\sigma_3$ の場合}} \ \\
+\[
+|0\rangle\langle 0|-|1\rangle\langle 1|
+=
+\begin{pmatrix}
+1 & 0\\
+0 & 0
+\end{pmatrix}
+-
+\begin{pmatrix}
+0 & 0\\
+0 & 1
+\end{pmatrix}
+=
+\begin{pmatrix}
+1 & 0\\
+0 & -1
+\end{pmatrix}
+=
+\sigma_3.
+\]
+したがって，
+\[
+\sigma_3=|0\rangle\langle 0|-|1\rangle\langle 1|
+\]
+
+\medskip
+\noindent
+以上より，$\sigma_1,\sigma_2,\sigma_3$ はそれぞれ
+\[
+\sigma_1=|0\rangle\langle 1|+|1\rangle\langle 0|,\qquad
+\sigma_2=-i|0\rangle\langle 1|+i|1\rangle\langle 0|,\qquad
+\sigma_3=|0\rangle\langle 0|-|1\rangle\langle 1|
+\]
+と表される．
+\end{proof}
+
+\newpage
+
+%============================================================
+\section*{\boxed{\textbf{\large 問2}}}
+%============================================================
+
+Let $H=\mathbb{C}^2\otimes\mathbb{C}^2$.
+Show that
+\[
+|0\rangle\otimes|0\rangle,\quad
+|0\rangle\otimes|1\rangle,\quad
+|1\rangle\otimes|0\rangle,\quad
+|1\rangle\otimes|1\rangle
+\]
+are the standard basis for $H$.
+
+\vspace{1em}
+
+%============================================================
+\section*{\boxed{\textbf{\large 解答}}}
+%============================================================
+
+\begin{proof}
+\ \\
+$\mathbb{C}^2$ の標準基底を
+\[
+|0\rangle=
+\begin{pmatrix}
+1\\
+0
+\end{pmatrix},
+\qquad
+|1\rangle=
+\begin{pmatrix}
+0\\
+1
+\end{pmatrix}
+\]
+とする。$\dim{H} = \dim{(\mathbb{C}^2\otimes\mathbb{C}^2)}=\dim{\mathbb{C}^2}\cdot \dim{\mathbb{C}^2}=2\cdot 2=4 = \dim{\mathbb{C}^4}$である。\ie $H\cong\mathbb{C}^4$\\
+\noindent
+(詳しい証明は \texttt{\ref{proof:dim}} を参照)。
+
+\medskip
+\noindent
+次、ベクトルのテンソル積を計算する。
+\paragraph{\textbf{$|0\rangle\otimes|0\rangle$ の計算}} \ \\
+\[
+|0\rangle\otimes|0\rangle
+=
+\begin{pmatrix}
+1\\
+0
+\end{pmatrix}
+\otimes
+\begin{pmatrix}
+1\\
+0
+\end{pmatrix}
+=
+\begin{pmatrix}
+1\cdot 1\\
+1\cdot 0\\
+0\cdot 1\\
+0\cdot 0
+\end{pmatrix}
+=
+\begin{pmatrix}
+1\\
+0\\
+0\\
+0
+\end{pmatrix}
+\]
+
+\paragraph{\textbf{$|0\rangle\otimes|1\rangle$ の計算}} \ \\
+\[
+|0\rangle\otimes|1\rangle
+=
+\begin{pmatrix}
+1\\
+0
+\end{pmatrix}
+\otimes
+\begin{pmatrix}
+0\\
+1
+\end{pmatrix}
+=
+\begin{pmatrix}
+1\cdot 0\\
+1\cdot 1\\
+0\cdot 0\\
+0\cdot 1
+\end{pmatrix}
+=
+\begin{pmatrix}
+0\\
+1\\
+0\\
+0
+\end{pmatrix}
+\]
+
+\paragraph{\textbf{$|1\rangle\otimes|0\rangle$ の計算}} \ \\
+\[
+|1\rangle\otimes|0\rangle
+=
+\begin{pmatrix}
+0\\
+1
+\end{pmatrix}
+\otimes
+\begin{pmatrix}
+1\\
+0
+\end{pmatrix}
+=
+\begin{pmatrix}
+0\cdot 1\\
+0\cdot 0\\
+1\cdot 1\\
+1\cdot 0
+\end{pmatrix}
+=
+\begin{pmatrix}
+0\\
+0\\
+1\\
+0
+\end{pmatrix}
+\]
+
+\paragraph{\textbf{(iv) $|1\rangle\otimes|1\rangle$ の計算}} \ \\
+\[
+|1\rangle\otimes|1\rangle
+=
+\begin{pmatrix}
+0\\
+1
+\end{pmatrix}
+\otimes
+\begin{pmatrix}
+0\\
+1
+\end{pmatrix}
+=
+\begin{pmatrix}
+0\cdot 0\\
+0\cdot 1\\
+1\cdot 0\\
+1\cdot 1
+\end{pmatrix}
+=
+\begin{pmatrix}
+0\\
+0\\
+0\\
+1
+\end{pmatrix}
+\]
+
+\medskip
+\noindent
+したがって，
+\[
+|0\rangle\otimes|0\rangle=
+\begin{pmatrix}
+1\\0\\0\\0
+\end{pmatrix},\quad
+|0\rangle\otimes|1\rangle=
+\begin{pmatrix}
+0\\1\\0\\0
+\end{pmatrix},\quad
+|1\rangle\otimes|0\rangle=
+\begin{pmatrix}
+0\\0\\1\\0
+\end{pmatrix},\quad
+|1\rangle\otimes|1\rangle=
+\begin{pmatrix}
+0\\0\\0\\1
+\end{pmatrix}.
+\]
+これらはちょうど $\mathbb{C}^4$ の標準基底
+\[
+e_1=
+\begin{pmatrix}
+1\\0\\0\\0
+\end{pmatrix},\quad
+e_2=
+\begin{pmatrix}
+0\\1\\0\\0
+\end{pmatrix},\quad
+e_3=
+\begin{pmatrix}
+0\\0\\1\\0
+\end{pmatrix},\quad
+e_4=
+\begin{pmatrix}
+0\\0\\0\\1
+\end{pmatrix}
+\]
+そのものである。
+
+\medskip
+\noindent
+さらに，任意のベクトル
+\[
+v=
+\begin{pmatrix}
+a\\
+b\\
+c\\
+d
+\end{pmatrix}
+\in \mathbb{C}^4
+\]
+は
+\[
+v
+=
+a
+\begin{pmatrix}
+1\\0\\0\\0
+\end{pmatrix}
++b
+\begin{pmatrix}
+0\\1\\0\\0
+\end{pmatrix}
++c
+\begin{pmatrix}
+0\\0\\1\\0
+\end{pmatrix}
++d
+\begin{pmatrix}
+0\\0\\0\\1
+\end{pmatrix}
+\]
+と書けるので，
+\[
+v
+=
+a(|0\rangle\otimes|0\rangle)
++b(|0\rangle\otimes|1\rangle)
++c(|1\rangle\otimes|0\rangle)
++d(|1\rangle\otimes|1\rangle)
+\]
+が成り立つ．よって，これら 4 つのベクトルは $H$ を張る．
+
+\medskip
+\noindent
+また，
+\[
+\alpha(|0\rangle\otimes|0\rangle)
++\beta(|0\rangle\otimes|1\rangle)
++\gamma(|1\rangle\otimes|0\rangle)
++\delta(|1\rangle\otimes|1\rangle)
+=0
+\]
+と仮定すると，
+\[
+\alpha
+\begin{pmatrix}
+1\\0\\0\\0
+\end{pmatrix}
++\beta
+\begin{pmatrix}
+0\\1\\0\\0
+\end{pmatrix}
++\gamma
+\begin{pmatrix}
+0\\0\\1\\0
+\end{pmatrix}
++\delta
+\begin{pmatrix}
+0\\0\\0\\1
+\end{pmatrix}
+=
+\begin{pmatrix}
+0\\0\\0\\0
+\end{pmatrix}
+\]
+であるから、
+\[
+\alpha=\beta=\gamma=\delta=0
+\]
+を得る．したがって，これら 4 つのベクトルは一次独立である．
+
+\medskip
+\noindent
+以上より，
+\[
+|0\rangle\otimes|0\rangle,\quad
+|0\rangle\otimes|1\rangle,\quad
+|1\rangle\otimes|0\rangle,\quad
+|1\rangle\otimes|1\rangle
+\]
+は $H=\mathbb{C}^2\otimes\mathbb{C}^2\cong\mathbb{C}^4$ の標準基底である．
+\end{proof}
+
+\newpage
+
+%============================================================
+\section*{\boxed{\textbf{\large 問3}}}
+%============================================================
+
+Show that
+\[
+(I_2-\sigma_k)\otimes(I_2+\sigma_k)+(I_2+\sigma_k)\otimes(I_2-\sigma_k)=I_4-\sigma_k\otimes\sigma_k
+\]
+for $k=1,2,3$, where $I_n$ is the identity matrix in $M_n(\mathbb{C})$.
+
+\vspace{1em}
+
+%============================================================
+\section*{\boxed{\textbf{\large 解答}}}
+%============================================================
+
+\begin{proof} 
+\ \\
+$k\in\{1,2,3\}$ を任意に固定する。
+テンソル積は各変数について線形であるから，
+\[
+(A+B)\otimes C=A\otimes C+B\otimes C,\qquad
+A\otimes(B+C)=A\otimes B+A\otimes C
+\]
+が成り立つ。また、
+\[
+(\lambda A)\otimes B=\lambda(A\otimes B)=A\otimes(\lambda B)
+\qquad
+(\lambda\in\mathbb{C})
+\]
+も成り立つ。これを用いて左辺を順に展開する。
+
+\medskip
+\noindent
+まず、第 1 項は
+\begin{align*}
+(I_2-\sigma_k)\otimes(I_2+\sigma_k)
+&=
+I_2\otimes I_2+I_2\otimes\sigma_k-\sigma_k\otimes I_2-\sigma_k\otimes\sigma_k
+\end{align*}
+同様に、第 2 項は
+\begin{align*}
+(I_2+\sigma_k)\otimes(I_2-\sigma_k)
+&=
+I_2\otimes I_2-I_2\otimes\sigma_k+\sigma_k\otimes I_2-\sigma_k\otimes\sigma_k
+\end{align*}
+
+\medskip
+\noindent
+したがって、両者を足し合わせると
+\begin{align*}
+&(I_2-\sigma_k)\otimes(I_2+\sigma_k)+(I_2+\sigma_k)\otimes(I_2-\sigma_k)\\
+&=
+\bigl(I_2\otimes I_2+I_2\otimes\sigma_k-\sigma_k\otimes I_2-\sigma_k\otimes\sigma_k\bigr)\\
+&\qquad
++\bigl(I_2\otimes I_2-I_2\otimes\sigma_k+\sigma_k\otimes I_2-\sigma_k\otimes\sigma_k\bigr)
+\end{align*}
+
+\medskip
+\noindent
+右辺で同種項をまとめると、
+\begin{align*}
+&(I_2-\sigma_k)\otimes(I_2+\sigma_k)+(I_2+\sigma_k)\otimes(I_2-\sigma_k)\\
+&=
+(I_2\otimes I_2)+(I_2\otimes I_2)
++(I_2\otimes\sigma_k)-(I_2\otimes\sigma_k)\\
+&\qquad
+-(\sigma_k\otimes I_2)+(\sigma_k\otimes I_2)
+-(\sigma_k\otimes\sigma_k)-(\sigma_k\otimes\sigma_k)\\
+&=
+2(I_2\otimes I_2)-2(\sigma_k\otimes\sigma_k)
+\end{align*}
+
+\medskip
+\noindent
+ここで、単位行列のテンソル積について
+\[
+I_2\otimes I_2=
+\begin{pmatrix}
+I_2 & \mathbf{0}\\
+\mathbf{0} & I_2
+\end{pmatrix}
+=
+\begin{pmatrix}
+1 & 0 & 0 & 0\\
+0 & 1 & 0 & 0\\
+0 & 0 & 1 & 0\\
+0 & 0 & 0 & 1
+\end{pmatrix}
+=I_4
+\]
+であるから、
+\[
+2(I_2\otimes I_2)-2(\sigma_k\otimes\sigma_k)
+=
+2I_4-2\sigma_k\otimes\sigma_k
+\]
+を得る。よって
+\[
+(I_2-\sigma_{k})\otimes(I_2+\sigma_{k})+(I_2+\sigma_{k})\otimes (I_2-\sigma_{k})=2I_4-2\sigma_{k}\otimes\sigma_{k}
+\]
+が示された。
+
+\medskip
+\noindent
+さらに、$k=1,2,3$ の各場合について確認すると、
+
+\paragraph{\textbf{$k=1$ の場合}} \ \\
+\[
+\sigma_1=
+\begin{pmatrix}
+0 & 1\\
+1 & 0
+\end{pmatrix}
+\]
+であるから、
+\[
+I_2-\sigma_1=
+\begin{pmatrix}
+1 & -1\\
+-1 & 1
+\end{pmatrix},
+\qquad
+I_2+\sigma_1=
+\begin{pmatrix}
+1 & 1\\
+1 & 1
+\end{pmatrix}
+\]
+となる。したがって、
+\[
+(I_2-\sigma_1)\otimes(I_2+\sigma_1)
+=
+\begin{pmatrix}
+1 & 1 & -1 & -1\\
+1 & 1 & -1 & -1\\
+-1 & -1 & 1 & 1\\
+-1 & -1 & 1 & 1
+\end{pmatrix}
+\]
+および
+\[
+(I_2+\sigma_1)\otimes(I_2-\sigma_1)
+=
+\begin{pmatrix}
+1 & -1 & 1 & -1\\
+-1 & 1 & -1 & 1\\
+1 & -1 & 1 & -1\\
+-1 & 1 & -1 & 1
+\end{pmatrix}
+\]
+である。よって、
+\[
+(I_2-\sigma_1)\otimes(I_2+\sigma_1)
++(I_2+\sigma_1)\otimes(I_2-\sigma_1)
+=
+\begin{pmatrix}
+2 & 0 & 0 & -2\\
+0 & 2 & -2 & 0\\
+0 & -2 & 2 & 0\\
+-2 & 0 & 0 & 2
+\end{pmatrix}.
+\]
+
+一方で、
+\[
+\sigma_1\otimes\sigma_1
+=
+\begin{pmatrix}
+0 & 0 & 0 & 1\\
+0 & 0 & 1 & 0\\
+0 & 1 & 0 & 0\\
+1 & 0 & 0 & 0
+\end{pmatrix}
+\]
+であるから、
+\[
+2I_4-2\sigma_1\otimes\sigma_1
+=
+\begin{pmatrix}
+2 & 0 & 0 & -2\\
+0 & 2 & -2 & 0\\
+0 & -2 & 2 & 0\\
+-2 & 0 & 0 & 2
+\end{pmatrix}.
+\]
+したがって、
+\[
+(I_2-\sigma_1)\otimes(I_2+\sigma_1)
++(I_2+\sigma_1)\otimes(I_2-\sigma_1)
+=
+2I_4-2\sigma_1\otimes\sigma_1
+\]
+が成り立つ。
+
+\paragraph{\textbf{$k=2$ の場合}} \ \\
+\[
+\sigma_2=
+\begin{pmatrix}
+0 & -i\\
+i & 0
+\end{pmatrix}
+\]
+であるから、
+\[
+I_2-\sigma_2=
+\begin{pmatrix}
+1 & i\\
+-i & 1
+\end{pmatrix},
+\qquad
+I_2+\sigma_2=
+\begin{pmatrix}
+1 & -i\\
+i & 1
+\end{pmatrix}
+\]
+となる。したがって、
+\[
+(I_2-\sigma_2)\otimes(I_2+\sigma_2)
+=
+\begin{pmatrix}
+1 & -i & i & 1\\
+i & 1 & -1 & i\\
+-i & -1 & 1 & -i\\
+1 & -i & i & 1
+\end{pmatrix}
+\]
+および
+\[
+(I_2+\sigma_2)\otimes(I_2-\sigma_2)
+=
+\begin{pmatrix}
+1 & i & -i & 1\\
+-i & 1 & -1 & -i\\
+i & -1 & 1 & i\\
+1 & i & -i & 1
+\end{pmatrix}
+\]
+である。よって、
+\[
+(I_2-\sigma_2)\otimes(I_2+\sigma_2)
++(I_2+\sigma_2)\otimes(I_2-\sigma_2)
+=
+\begin{pmatrix}
+2 & 0 & 0 & 2\\
+0 & 2 & -2 & 0\\
+0 & -2 & 2 & 0\\
+2 & 0 & 0 & 2
+\end{pmatrix}.
+\]
+
+一方で、
+\[
+\sigma_2\otimes\sigma_2
+=
+\begin{pmatrix}
+0 & 0 & 0 & -1\\
+0 & 0 & 1 & 0\\
+0 & 1 & 0 & 0\\
+-1 & 0 & 0 & 0
+\end{pmatrix}
+\]
+であるから、
+\[
+2I_4-2\sigma_2\otimes\sigma_2
+=
+\begin{pmatrix}
+2 & 0 & 0 & 2\\
+0 & 2 & -2 & 0\\
+0 & -2 & 2 & 0\\
+2 & 0 & 0 & 2
+\end{pmatrix}.
+\]
+したがって、
+\[
+(I_2-\sigma_2)\otimes(I_2+\sigma_2)
++(I_2+\sigma_2)\otimes(I_2-\sigma_2)
+=
+2I_4-2\sigma_2\otimes\sigma_2
+\]
+が成り立つ。
+
+\paragraph{\textbf{$k=3$ の場合}} \ \\
+\[
+\sigma_3=
+\begin{pmatrix}
+1 & 0\\
+0 & -1
+\end{pmatrix}
+\]
+であるから、
+\[
+I_2-\sigma_3=
+\begin{pmatrix}
+0 & 0\\
+0 & 2
+\end{pmatrix},
+\qquad
+I_2+\sigma_3=
+\begin{pmatrix}
+2 & 0\\
+0 & 0
+\end{pmatrix}
+\]
+となる。したがって、
+\[
+(I_2-\sigma_3)\otimes(I_2+\sigma_3)
+=
+\begin{pmatrix}
+0 & 0 & 0 & 0\\
+0 & 0 & 0 & 0\\
+0 & 0 & 4 & 0\\
+0 & 0 & 0 & 0
+\end{pmatrix}
+\]
+および
+\[
+(I_2+\sigma_3)\otimes(I_2-\sigma_3)
+=
+\begin{pmatrix}
+0 & 0 & 0 & 0\\
+0 & 4 & 0 & 0\\
+0 & 0 & 0 & 0\\
+0 & 0 & 0 & 0
+\end{pmatrix}
+\]
+である。よって、
+\[
+(I_2-\sigma_3)\otimes(I_2+\sigma_3)
++(I_2+\sigma_3)\otimes(I_2-\sigma_3)
+=
+\begin{pmatrix}
+0 & 0 & 0 & 0\\
+0 & 4 & 0 & 0\\
+0 & 0 & 4 & 0\\
+0 & 0 & 0 & 0
+\end{pmatrix}.
+\]
+
+一方で、
+\[
+\sigma_3\otimes\sigma_3
+=
+\begin{pmatrix}
+1 & 0 & 0 & 0\\
+0 & -1 & 0 & 0\\
+0 & 0 & -1 & 0\\
+0 & 0 & 0 & 1
+\end{pmatrix}
+\]
+であるから、
+\[
+2I_4-2\sigma_3\otimes\sigma_3
+=
+\begin{pmatrix}
+0 & 0 & 0 & 0\\
+0 & 4 & 0 & 0\\
+0 & 0 & 4 & 0\\
+0 & 0 & 0 & 0
+\end{pmatrix}.
+\]
+したがって、
+\[
+(I_2-\sigma_3)\otimes(I_2+\sigma_3)
++(I_2+\sigma_3)\otimes(I_2-\sigma_3)
+=
+2I_4-2\sigma_3\otimes\sigma_3
+\]
+が成り立つ。
+
+\medskip
+\noindent
+以上より、$k=1,2,3$ のいずれの場合にも
+\[
+(I_2-\sigma_k)\otimes(I_2+\sigma_k)
++(I_2+\sigma_k)\otimes(I_2-\sigma_k)
+=
+2I_4-2\sigma_k\otimes\sigma_k
+\]
+が成り立つ。
+
+\end{proof}
+
+
+%============================================================
+\appendix
+\section*{\boxed{\textbf{\large Appendix }}}
+%============================================================
+\begin{prop}\label{proof:dim}
+$\mathbb{F}$ を体とし、$V,W$ を $\mathbb{F}\in \{\mathbb{R}, \mathbb{C}\}$ 上の有限次元ベクトル空間とする。
+このとき、次は同値である：
+\[
+V \cong W \qquad 
+\qquad \Longleftrightarrow \qquad
+\dim V = \dim W.
+\]
+\end{prop}
+
+\begin{proof}
+\ \\
+$\mathbf{(1)}$\quad $(\Rightarrow)$ を示す。
+$V \cong W$ であると仮定する。
+すると、ある線形同型写像
+\[
+T:V\to W
+\]
+が存在する。
+
+\medskip
+\noindent
+いま、$\dim V=n$ とおき、$V$ の基底を
+\[
+\{v_1,v_2,\dots,v_n\}
+\]
+とする。
+このとき、$W$ におけるベクトルの族
+\[
+\{T(v_1),T(v_2),\dots,T(v_n)\}
+\]
+を考える。
+これが $W$ の基底であることを示せば、
+\[
+\dim W=n=\dim V
+\]
+が従う。
+
+\paragraph{$\{T(v_1),T(v_2),\dots,T(v_n)\}$ \textbf{が} $W$ \textbf{を張ることを示す。}} \ \\
+任意に $w\in W$ をとる。
+$T$ は全射であるから、ある $v\in V$ が存在して
+\[
+T(v)=w
+\]
+となる。\\
+\noindent
+ここで、$\{v_1,v_2,\dots,v_n\}$ は $V$ の基底であるから、ある係数
+\[
+a_1,a_2,\dots,a_n\in\mathbb{F}
+\]
+を用いて
+\[
+v=a_1v_1+a_2v_2+\cdots+a_nv_n
+\]
+と一意的に表せる。
+よって、$T$ の線形性より
+\[
+w=T(v)
+=T(a_1v_1+a_2v_2+\cdots+a_nv_n)
+=a_1T(v_1)+a_2T(v_2)+\cdots+a_nT(v_n)
+\]
+となる。
+したがって、任意の $w\in W$ は $\{T(v_1),T(v_2),\dots,T(v_n)\}$ の線形結合として表される。
+ゆえに、
+\[
+W=\mathrm{span}\{T(v_1),T(v_2),\dots,T(v_n)\}
+\]
+である。
+
+\paragraph{$\{T(v_1),T(v_2),\dots,T(v_n)\}$ \textbf{が一次独立であることを示す。}} \ \\
+\[
+b_1T(v_1)+b_2T(v_2)+\cdots+b_nT(v_n)=0
+\qquad (b_1,\dots,b_n\in\mathbb{F})
+\]
+と仮定する。
+このとき、$T$ の線形性により
+\[
+T(b_1v_1+b_2v_2+\cdots+b_nv_n)=0
+\]
+を得る。\\
+\noindent
+$T$ は単射であるから、
+\[
+b_1v_1+b_2v_2+\cdots+b_nv_n=0
+\]
+である。
+ところが、$\{v_1,v_2,\dots,v_n\}$ は基底、一次独立であるから、
+\[
+b_1=b_2=\cdots=b_n=0
+\]
+が従う。
+したがって、$\{T(v_1),T(v_2),\dots,T(v_n)\}$ は一次独立である。
+
+\medskip
+\noindent
+以上より、$\{T(v_1),T(v_2),\dots,T(v_n)\}$ は $W$ の基底である。
+したがって、
+\[
+\dim W=n=\dim V
+\]
+となる。
+よって、
+\[
+V\cong W \Longrightarrow \dim V=\dim W
+\]
+が示された。
+
+\vspace{1em}
+
+\noindent
+$\mathbf{(2)}$\quad $(\Leftarrow)$ を示す。
+\[
+\dim V=\dim W
+\]
+と仮定する。
+この共通の次元を $n$ と書くと、
+\[
+\dim V=\dim W=n.
+\]
+
+\medskip
+\noindent
+$V$ と $W$ は有限次元であるから、それぞれ基底をとることができる。\\
+\noindent
+$V$ の基底を
+\[
+\{v_1,v_2,\dots,v_n\},
+\]
+$W$ の基底を
+\[
+\{w_1,w_2,\dots,w_n\}
+\]
+とする。\\
+\noindent
+このとき、写像 $T:V\to W$ を
+\[
+T(v_i)=w_i\qquad (i=1,2,\dots,n)
+\]
+で定め、任意の$v\in V$に対して
+\[
+v=a_1v_1+a_2v_2+\cdots+a_nv_n
+\]
+と書ける。このとき、
+\[
+T(v):=a_1w_1+a_2w_2+\cdots+a_nw_n
+\]
+となる。
+
+% \paragraph{\textbf{この定義が well-defined であることの確認}} \ \\
+% $\{v_1,v_2,\dots,v_n\}$ は $V$ の基底であるから、任意の $v\in V$ の表示
+% \[
+% v=a_1v_1+a_2v_2+\cdots+a_nv_n
+% \]
+% は一意的である。
+% したがって、上の式による $T(v)$ の定義は表し方に依らず一意に定まる。
+% よって、$T$ は well-defined である。
+
+\paragraph{\textbf{$T$ が線形であることの確認}} \ \\
+任意の
+\[
+v=a_1v_1+\cdots+a_nv_n,\qquad
+u=b_1v_1+\cdots+b_nv_n
+\]
+および任意の $\alpha,\beta\in\mathbb{F}$ に対して、
+\[
+\alpha v+\beta u
+=
+(\alpha a_1+\beta b_1)v_1+\cdots+(\alpha a_n+\beta b_n)v_n
+\]
+であるから、
+\begin{align*}
+T(\alpha v+\beta u)
+&=
+(\alpha a_1+\beta b_1)w_1+\cdots+(\alpha a_n+\beta b_n)w_n\\
+&=
+\alpha(a_1w_1+\cdots+a_nw_n)+\beta(b_1w_1+\cdots+b_nw_n)\\
+&=
+\alpha T(v)+\beta T(u).
+\end{align*}
+したがって、$T$ は線形写像である。
+
+\paragraph{\textbf{$T$ が単射であることを示す。}} \ \\
+$T(v)=0$ と仮定する。
+$v\in V$ を
+\[
+v=a_1v_1+a_2v_2+\cdots+a_nv_n
+\]
+と書けば、
+\[
+0=T(v)=a_1w_1+a_2w_2+\cdots+a_nw_n
+\]
+となる。
+ところが、$\{w_1,w_2,\dots,w_n\}$ は $W$ の基底であるから一次独立である。
+したがって、
+\[
+a_1=a_2=\cdots=a_n=0
+\]
+である。
+よって、
+\[
+v=0
+\]
+となる。
+したがって、$\ker T=\{0\}$ である。\\
+\noindent
+さらに、$u,v\in V$ に対して、
+$T(u) = T(v)$ とすると、$T$の線形性より、$T(u-v) = 0$ となる。
+したがって、$u-v \in \ker T$ であり、$\ker T=\{0\}$ であるから、$u-v=0$ すなわち $u=v$ となる。ゆえに、$T$ は単射である。
+
+\paragraph{\textbf{$T$ が全射であることを示す。}} \ \\
+任意に $w\in W$ をとる。
+$\{w_1,w_2,\dots,w_n\}$ は $W$ の基底であるから、ある係数
+\[
+c_1,c_2,\dots,c_n\in\mathbb{F}
+\]
+が存在して
+\[
+w=c_1w_1+c_2w_2+\cdots+c_nw_n
+\]
+と書ける。
+ここで、
+\[
+v=c_1v_1+c_2v_2+\cdots+c_nv_n \in V
+\]
+とおけば、$T$ の定義より
+\[
+T(v)=c_1w_1+c_2w_2+\cdots+c_nw_n=w  
+\]
+となる。
+したがって、任意の $w\in W$ は $T$ の像に属する。\\
+\noindent
+\ie $\forall w \in W, w\in \mathrm{Im}(T) = \{T(v) |v \in V\}$が成り立つから、$W \subset \mathrm{Im}(T)$である。定義により、$\mathrm{Im}(T) \subset W$ であるから、$W = \mathrm{Im}(T)$ となる。ゆえに、$T$ は全射である。\\[0.5em]
+以上より、$T$ は線形かつ単射かつ全射である。
+したがって、$T$ は線形同型写像である。
+ゆえに、
+\[
+V\cong W
+\]
+が従う。
+すなわち、
+\[
+\dim V=\dim W \Longrightarrow V\cong W
+\]
+である。\\[1.5em]
+以上の$\mathbf{(1)}$と$\mathbf{(2)}$で、
+\[
+V \cong W
+\qquad \Longleftrightarrow \qquad
+\dim V=\dim W
+\]
+が示された。
+\end{proof}
+
+\end{document}
